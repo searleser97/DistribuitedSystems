@@ -1,0 +1,29 @@
+¿Qué es un sistema distribuido?
+A. Es aquel en el cual los componentes localizados en computadoras, conectadas en red, comunican y coordinan sus acciones únicamente mediante el paso de mensajes.
+B. Es aquel que se compone de multiples computadoras para su funcionamiento
+C. Es un sistema en el cual diversas computadoras se encuentran interconectadas
+D. Es una red de computadoras
+
+Ejemplo de un sistema distribuido
+A. Internet
+B. Aplicación Movil
+C. Google Chrome
+D. Ninguna de las anteriores
+
+¿Cuál de las siguientes opciones es una consecuencia de un sistema distribuido?
+A. Inexistencia de reloj global
+B. Conexión a internet
+C. Envio de mensajes de sincronización
+D. Generación de codigos de comunicación
+
+¿Cuándo se dice que un sistema es escalable?
+A. Si conserva su efectividad cuando ocurre un incremento signinficativo en el número de recursos y el número de usuarios.
+B. Si el sistema puede ser extendido o reimplementado en diversos aspectos.
+C. Cuando hace uso de un middleware.
+D. Cuando es toleranto a fallas.
+
+¿Cuál de las siguientes opciones NO es un desafío que se presente en el desarrollo de sistemas distribuidos?
+A. Funcionalidad
+B. Heterogeneidad.
+C. Seguridad
+D. Transparencia

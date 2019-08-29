@@ -1,0 +1,29 @@
+¿Cuándo se dice que la comunicación es fiable?
+A. Si se garantiza que los mensajes se entregan a pesar de poder dejar caer o perder un número razonable de ellos.
+B. Si siempre se recibe un acuse.
+C. Si los mensajes se envian y reciben de manera ordenada y sin perdidas.
+D. La comunicación nunca es fiable.
+
+¿Cuál es el nombre de la clase de java con la cual se crea un socket de datagrama?
+A. DatagramSocket
+B. DatagramPacket
+C. UDPSocket
+D. ServerSocket
+
+¿Qué componentes estan incluidos dentro de las capas middleware?
+A. RMI y RPC, Protocolo petición-respuesta, Empaquetado y representación externa de datos.
+B. UDP y TCP.
+C. Aplicaciones, Servicios.
+D. Todos los anteriores.
+
+¿Cuál de las siguientes servicios NO se ejecuta sobre conexiones TCP.
+A. DNS
+B. HTTP
+C. FTP
+D. SMTP
+
+¿En cual de los siguientes protocolos los mensajes NO reciben necesariamente en el mismo orden en el que se enviaron?
+A. UDP
+B. TCP
+C. SPX
+D. IPX
