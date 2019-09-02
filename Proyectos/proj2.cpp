@@ -4,5 +4,5 @@ const double g = 9.8;
 int main() {
   double t;
   cin >> t;
-  cout << t + (.5 * g * t * t) << endl;
+  cout << (.5 * g * t * t) << endl;
 }
