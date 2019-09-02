@@ -11,9 +11,8 @@ public class Cadena {
 		while(k < n)
 		{
 			String cadena = "";
-			for(int i = k; i < k + m; i++)
-			{
-				cadena += ((char)(rnd.nextDouble()*26 + 65)) + "";
+			for(int i = k; i < k + m; i++) {
+				cadena += ( (char) (rnd.nextDouble() * 26 + 65)) + "";
 			}
 			if(k != 0)
 				cadenota += " ";
@@ -21,16 +20,14 @@ public class Cadena {
 
 			cadenota += cadena;
 		}
-		System.out.println(cadenota);
+		//System.out.println(cadenota);
 
 		String strFind = "IPN";
         int count = 0, fromIndex = 0;
         
-        while ((fromIndex = cadenota.indexOf(strFind, fromIndex)) != -1 ){
- 
+        while ((fromIndex = cadenota.indexOf(strFind, fromIndex)) != -1 ) {
             count++;
-            fromIndex++;
-            
+            fromIndex++;           
         }
         System.out.println("cadena IPN encontrada " + count + " veces.");
 	}
