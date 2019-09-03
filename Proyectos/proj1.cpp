@@ -1,4 +1,5 @@
-#include <bits/stdc++.h>
+#include <cmath>
+#include <iostream>
 using namespace std;
 
 double epsilon = 1e-4;
