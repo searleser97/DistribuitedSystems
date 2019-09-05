@@ -4,37 +4,36 @@
 #include <vector>
 using namespace std;
 
-void execAsync(const string & path, const string & param = "") {
-  execl(path.c_str(), param.c_str());
+void execAsync(const string &path, const string &param = "") {
+  system(("./" + path + " " + param).c_str());
 }
 
-int main() {
+int main(int argc, char *argv[]) {
   ios_base::sync_with_stdio(0);
   cin.tie(0);
   cout.tie(0);
   vector<string> fileNames;
-  int opt;
-  cin >> opt;
+  int opt = argv[1][0] - '0';
   switch (opt) {
-  case -1:
+  case 0:
     fileNames = {"DD", "DD"};
     break;
-  case 0:
+  case 1:
     fileNames = {"RAM", "RAM"};
     break;
-  case 1:
+  case 2:
     fileNames = {"CPU", "CPU"};
     break;
-  case 2:
+  case 3:
     fileNames = {"DD", "CPU"};
     break;
-  case 3:
+  case 4:
     fileNames = {"DD", "RAM"};
     break;
-  case 4:
+  case 5:
     fileNames = {"CPU", "RAM"};
     break;
-  case 5:
+  case 6:
     fileNames = {"CPU", "DD", "RAM"};
   default:
     break;
@@ -42,12 +41,16 @@ int main() {
 
   vector<string> cadenotaFiles = {"a.txt", "b.txt"};
   int count = 0;
-  vector<thread> ths;
+  vector<thread> threads;
   for (auto file : fileNames) {
-    if (opt == -1) {
-      ths.emplace_back(execAsync, file, cadenotaFiles[count]);
+    if (file == "DD") {
+      threads.emplace_back(execAsync, file, cadenotaFiles[count]);
       count++;
     } else
-      ths.emplace_back(execAsync, file);
+      threads.emplace_back(execAsync, file, "");
+  }
+
+  for (auto &th : threads) {
+    th.join();
   }
 }

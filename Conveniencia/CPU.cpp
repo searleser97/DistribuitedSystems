@@ -3,7 +3,7 @@
 using namespace std;
 
 int main() {
-	double MAX = 1e8;
+	double MAX = 1.065e8;
 
 	double i = 1;
 	double seno = 0;
