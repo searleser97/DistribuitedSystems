@@ -1,0 +1,29 @@
+¿Qué es una operación multicast?
+A. Enviar un mensaje desde un proceso a cada uno de los miembros de un grupo de procesos
+B. Enviar un mensaje desde un grupo de procesos a un único destinatario
+C. Enviar varios mensajes desde un proceso a cada uno de los miembros de un grupo de procesos
+D. Enviar varios mensajes desde un grupo de procesos a un único destinatario
+
+¿De qué clase es una dirección IP de multicast de grupo?
+A. Clase D
+B. Clase C
+C. Clase B
+D. Clase A
+
+¿En qué protocolo de transporte está disponible el multicast?
+A. UDP
+B. TCP
+C. SCTP
+D. Ninguna de las otras opciones
+
+¿Cómo se llama la clase en Java que permite el multicast?
+A. MulticastSocket
+B. DatagramSocket
+C. ServerSocket
+D. Socket
+
+¿Cómo se limita la distancia de propagación de un datagrama multicast?
+A. Usando el campo TTL
+B. Con la propiedad TimeOut
+C. Con un ping
+D. Con la propiedad Timestamp

@@ -1,0 +1,29 @@
+¿Cuántos tipos de dato primitivos soporta COBRA?
+A. 15
+B. 16
+C. 10
+D. 4
+
+¿Con qué clase de Java podemos escribir tipos de dato primitivos en una secuencia de bytes?
+A. ObjectOutputStream
+B. DataOutputStream
+C. FileOutputStream
+D. ByteArrayOutputStream
+
+¿Cómo deben ser las referencias a objetos remotos entre todos los procesos de un sistema distribuido?
+A. Únicas
+B. Iguales
+C. Reutilizables
+D. Temporales
+
+¿Cuál es el método HTTP que pide el recurso cuya URL se da como argumento?
+A. GET
+B. POST
+C. PUT
+D. DELETE
+
+¿Cuáles son las tres operaciones primitivas en el protocolo petición-respuesta?
+A. hazOperacion, damePeticion y enviaRespuesta
+B. enviaPeticion, esperaRespuesta, enviaRespuesta
+C. solicitaRespuesta, esperaRespuesta, enviaRespuesta
+D. preguntaSolicitud, esperaSolicitud, enviaResultado
