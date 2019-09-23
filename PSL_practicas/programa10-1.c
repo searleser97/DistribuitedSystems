@@ -16,7 +16,7 @@ void printIp(uint32_t ip) {
    printf("%u.%u.%u.%u", ipBlock(ip, 0), ipBlock(ip, 1), ipBlock(ip, 2), ipBlock(ip, 3));
 }
 
-int main(void)
+int main(int argc, char * argv[])
 {
    struct sockaddr_in msg_to_server_addr, client_addr;
    int s, num[2], res;
@@ -25,7 +25,7 @@ int main(void)
    /* rellena la dirección del servidor */
    bzero((char *)&msg_to_server_addr, sizeof(msg_to_server_addr));
    msg_to_server_addr.sin_family = AF_INET;
-   uint32_t ip = msg_to_server_addr.sin_addr.s_addr = inet_addr("127.0.0.1");
+   uint32_t ip = msg_to_server_addr.sin_addr.s_addr = inet_addr(argv[1]);
    msg_to_server_addr.sin_port = htons(puerto);
    /* rellena la direcciòn del cliente*/
    bzero((char *)&client_addr, sizeof(client_addr));

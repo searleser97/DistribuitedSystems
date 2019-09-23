@@ -16,7 +16,7 @@ void printIp(uint32_t ip) {
 
 int puerto = 7200;
 
-int main(void) {
+int main(int argc, char * argv[]) {
   int num[2];
   int s, res, clilen;
   struct sockaddr_in server_addr, msg_to_client_addr;
@@ -34,7 +34,7 @@ int main(void) {
     recvfrom(s, (char *)num, 2 * sizeof(int), 0,
              (struct sockaddr *)&msg_to_client_addr, &clilen);
     
-    printf("puerto de cliente: %u\n", ntohs(msg_to_client_addr.sin_port));
+    printf("puerto de cliente que nos solicita la suma: %u\n", ntohs(msg_to_client_addr.sin_port));
     printf("ip del cliente que nos solicita la suma: ");
     printIp(msg_to_client_addr.sin_addr.s_addr);
     printf("\n");
