@@ -19,7 +19,7 @@ void printIp(uint32_t ip) {
 int main(int argc, char * argv[])
 {
    struct sockaddr_in msg_to_server_addr, client_addr;
-   int s, num[2], res;
+   int s, res;
    
    s = socket(AF_INET, SOCK_DGRAM, 0);
    /* rellena la dirección del servidor */
@@ -35,11 +35,11 @@ int main(int argc, char * argv[])
    printIp(ip);
    printf("\n");
    /*cuando se utiliza por numero de puerto el 0, el sistema se encarga de asignarle uno */
-   client_addr.sin_port = htons(0);
+   client_addr.sin_port = htons(6666);
    bind(s, (struct sockaddr *)&client_addr,sizeof(client_addr));
-   num[0] = 2;
-   num[1] = 5; /*rellena el mensaje */
-   sendto(s, (char *)num, 2 * sizeof(int), 0, (struct sockaddr *) &msg_to_server_addr, sizeof(msg_to_server_addr));
+   char num[65507];
+   memset(num, 'a', sizeof(num));
+   sendto(s, (void *)num, sizeof(num), 0, (struct sockaddr *) &msg_to_server_addr, sizeof(msg_to_server_addr));
    
    /* se bloquea esperando respuesta */
    struct sockaddr_in sender;
