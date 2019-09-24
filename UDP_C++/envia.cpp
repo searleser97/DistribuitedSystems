@@ -21,6 +21,8 @@ int main(int argc, char* argv[])
 	PaqueteDatagrama paquete(mensaje.c_str(), mensaje.size(), ip.c_str(), puerto);
 	SocketDatagrama s(puerto);
 	s.envia(paquete);
+
+	cout << "Mensaje enviado\n";
 	
 	PaqueteDatagrama respuesta(1000);
 	s.recibe(respuesta);

@@ -8,7 +8,10 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-	SocketDatagrama s(0);
+	int puerto;
+	cout << "Puerto en el que se va a escuchar: ";
+	cin >> puerto;
+	SocketDatagrama s(puerto);
 	cout << "Servidor iniciado...\n";
 	while(1){
 		PaqueteDatagrama p(1000);

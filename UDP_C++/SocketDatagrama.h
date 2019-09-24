@@ -2,6 +2,7 @@
 #include "PaqueteDatagrama.h"
 class SocketDatagrama {
 public:
+	SocketDatagrama();
 	SocketDatagrama(int);
 	~SocketDatagrama();
 	
