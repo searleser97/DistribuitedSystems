@@ -25,7 +25,7 @@ PaqueteDatagrama::~PaqueteDatagrama() {
 }
 
 void PaqueteDatagrama::inicializaPuerto(int puerto) {
-	this->puerto = htons(puerto);
+	this->puerto = puerto;
 }
 
 void PaqueteDatagrama::inicializaIp(const char *ip) {
@@ -54,5 +54,5 @@ unsigned int PaqueteDatagrama::obtieneLongitud() {
 }
 
 int PaqueteDatagrama::obtienePuerto() {
-	return ntohs(this->puerto);
+	return this->puerto;
 }
