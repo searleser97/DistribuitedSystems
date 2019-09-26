@@ -36,10 +36,8 @@ int main(int argc, char * argv[])
    printIp(ip);
    printf("\n");
    /*cuando se utiliza por numero de puerto el 0, el sistema se encarga de asignarle uno */
-   client_addr.sin_port = htons(6666);
+   client_addr.sin_port = htons(0);
    bind(s, (struct sockaddr *)&client_addr,sizeof(client_addr));
-   //char num[65507];
-   //memset(num, 'a', sizeof(num));
 
    int num1[2];
    printf("Ingresa num1\n");

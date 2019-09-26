@@ -11,11 +11,9 @@ void printIp(uint32_t ip) {
   printf("%u.%u.%u.%u", ipBlock(ip, 0), ipBlock(ip, 1), ipBlock(ip, 2),
          ipBlock(ip, 3));
 }
-int limit = 65507;
 int puerto = 55555;
 
 int main(int argc, char *argv[]) {
-  char num[(int)1<<16];
   int s, res, clilen;
   struct sockaddr_in server_addr, msg_to_client_addr;
 
