@@ -10,23 +10,24 @@ int main(int argc, char* argv[])
 {
 	string ip;
 	int puerto;
-	string mensaje;
+	int nums[2], suma;
 	cout << "Direccion IP del servidor: ";
 	cin >> ip;
 	cout << "Puerto del servidor: ";
 	cin >> puerto;
-	cout << "Mensaje a enviar: ";
-	cin >> mensaje;
+	cout << "Numeros a sumar: ";
+	cin >> nums[0] >> nums[1];
 
-	PaqueteDatagrama paquete(mensaje.c_str(), mensaje.size(), ip.c_str(), puerto);
+	PaqueteDatagrama paquete((char*)nums, sizeof(nums), ip.c_str(), puerto);
 	SocketDatagrama s(puerto);
 	s.envia(paquete);
 
-	cout << "Mensaje enviado\n";
+	cout << "Numeros enviados.\n";
 	
 	PaqueteDatagrama respuesta(1000);
 	s.recibe(respuesta);
-	cout << "Respuesta desde " << respuesta.obtieneDireccion() << ":" << respuesta.obtienePuerto() << ": " << respuesta.obtieneDatos() << "\n";
+	suma = *respuesta.obtieneDatos();
+	cout << "Respuesta desde " << respuesta.obtieneDireccion() << ":" << respuesta.obtienePuerto() << ": " << suma << "\n";
 	
 	return 0;
 }
