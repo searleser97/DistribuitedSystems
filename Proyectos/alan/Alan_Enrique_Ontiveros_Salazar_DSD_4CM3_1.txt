@@ -1,0 +1,479 @@
+#include <iostream>
+#include <iomanip>
+#include <cmath>
+using namespace std;
+
+double Sqrt(double n) {
+	double x0 = 0, x1 = 0.5;
+	while(abs(x0 - x1) >= 1e-6) {
+		x0 = x1;
+		x1 = 0.5 * (x0 + n / x0);
+	}
+	return x1;
+}
+
+int main() {
+	double n;
+	cout << "Enter the value of n = ";
+	cin >> n;
+	cout << fixed << setprecision(4) << "The square root of " << n << " is " << Sqrt(n) << ".\n";
+	return 0;
+}
+
+****************************************************************************************************
+
+#include <iostream>
+#include <iomanip>
+#include <cmath>
+using namespace std;
+
+double height(double t) {
+	double g = 9.81;
+	return 0.5 * g * t * t;
+}
+
+int main() {
+	double t;
+	cout << "Enter the time in seconds = ";
+	cin >> t;
+	cout << fixed << setprecision(4) << "The height of the building is " << height(t) << " meters.";
+	return 0;
+}
+
+****************************************************************************************************
+
+#include <iostream>
+#include <iomanip>
+#include <cmath>
+using namespace std;
+
+int main() {
+	int t;
+	cout << "Enter the time in seconds = ";
+	cin >> t;
+	int seconds = t % 60;
+	int minutes = t / 60 % 60;
+	int hours = t / 3600 % 60;
+	cout << "The time (hh:mm:ss) is ";
+	cout << setfill('0') << setw(2) << hours << ":";
+	cout << setfill('0') << setw(2) << minutes << ":";
+	cout << setfill('0') << setw(2) << seconds << ".\n";
+	return 0;
+}
+
+****************************************************************************************************
+
+#ifndef Temperatura_H_
+#define Temperatura_H_
+
+class Temperatura {
+	private:
+		double K;
+	public:
+		void setTempKelvin(double K);
+		void setTempFahrenheit(double F);
+		void setTempCelsius(double C);
+		double getTempKelvin();
+		double getTempFahrenheit();
+		double getTempCelsius();
+};
+
+#endif
+
+----------------------------------------------------------------------------------------------------
+
+#include "Temperatura.h"
+
+void Temperatura::setTempKelvin(double K) {
+	this->K = K;
+}
+
+void Temperatura::setTempFahrenheit(double F) {
+	this->K = (F - 32) / 1.8 + 273.15;
+}
+
+void Temperatura::setTempCelsius(double C) {
+	this->K = C + 273.15;
+}
+
+double Temperatura::getTempKelvin() {
+	return this->K;
+}
+
+double Temperatura::getTempFahrenheit() {
+	return 1.8 * (this->K - 273.15) + 32;
+}
+
+double Temperatura::getTempCelsius() {
+	return this->K - 273.15;
+}
+
+----------------------------------------------------------------------------------------------------
+
+#include <iostream>
+#include <iomanip>
+#include <cmath>
+#include "Temperatura.h"
+using namespace std;
+
+int main() {
+	Temperatura temp;
+	double value;
+	int source, dest;
+
+	cout << "Source unit: [0]Kelvin, [1]Fahrenheit, [2]Celsius: ";
+	cin >> source;
+
+	cout << "Value: ";
+	cin >> value;
+
+	cout << "Destination unit: [0]Kelvin, [1]Fahrenheit, [2]Celsius: ";
+	cin >> dest;
+
+	if (source == 0) {
+		temp.setTempKelvin(value);
+		cout << value << "°K = ";
+	} else if (source == 1) {
+		temp.setTempFahrenheit(value);
+		cout << value << "°F = ";
+	} else {
+		temp.setTempCelsius(value);
+		cout << value << "°C = ";
+	}
+
+	if (dest == 0) {
+		cout << temp.getTempKelvin() << "°K\n";
+	} else if (dest == 1) {
+		cout << temp.getTempFahrenheit() << "°F\n";
+	} else {
+		cout << temp.getTempCelsius() << "°C\n";
+	}
+	
+	return 0;
+}
+
+****************************************************************************************************
+
+#include <string>
+using namespace std;
+
+#ifndef Fraccion_H_
+#define Fraccion_H_
+
+class Fraccion {
+	private:
+		int num;
+		int den;
+	public:
+		Fraccion(int num, int den);
+		double toDouble();
+		string toString();
+		Fraccion reduce();
+};
+
+#endif
+
+----------------------------------------------------------------------------------------------------
+
+#include "Fraccion.h"
+#include <cassert>
+#include <cmath>
+
+int gcd(int a, int b) {
+	int r;
+	while (b) {
+		r = a % b;
+		a = b;
+		b = r;
+	}
+	return a;
+}
+
+Fraccion::Fraccion(int num, int den) {
+	assert(den != 0);
+	if (den < 0) {
+		num = -num;
+		den = -den;
+	}
+	this->num = num;
+	this->den = den;
+}
+
+double Fraccion::toDouble() {
+	return (double)num / den;
+}
+
+string Fraccion::toString() {
+	if (den == 1) {
+		return to_string(num);
+	} else {
+		return to_string(num) + "/" + to_string(den);
+	}
+}
+
+Fraccion Fraccion::reduce() {
+	int d = gcd(abs(num), den);
+	return Fraccion(num / d, den / d);
+}
+
+----------------------------------------------------------------------------------------------------
+
+#include <iostream>
+#include <iomanip>
+#include "Fraccion.h"
+using namespace std;
+
+int main() {
+	int num, den;
+	cout << "Numerator = ";
+	cin >> num;
+	cout << "Denominator = ";
+	cin >> den;
+	Fraccion frac(num, den);
+	cout << frac.toString() << " = " << frac.reduce().toString() << " = " << frac.toDouble() << "\n";
+	return 0;
+}
+
+****************************************************************************************************
+
+#ifndef Coordenada_H_
+#define Coordenada_H_
+
+class Coordenada {
+	private:
+		double x;
+		double y;
+		double z;
+	public:
+		Coordenada();
+		Coordenada(double x, double y, double z);
+		double getX();
+		double getY();
+		double getZ();
+};
+
+#endif
+
+----------------------------------------------------------------------------------------------------
+
+#include "Coordenada.h"
+
+Coordenada::Coordenada(): x(0), y(0), z(0) {}
+
+Coordenada::Coordenada(double x, double y, double z): x(x), y(y), z(z) {}
+
+double Coordenada::getX() {
+	return x;
+}
+
+double Coordenada::getY() {
+	return y;
+}
+
+double Coordenada::getZ() {
+	return z;
+}
+
+----------------------------------------------------------------------------------------------------
+
+#include "Coordenada.h"
+
+#ifndef Rectangulo_H_
+#define Rectangulo_H_
+
+class Rectangulo {
+	private:
+		Coordenada lowerLeft;
+		Coordenada upperRight;
+	public:
+		Rectangulo();
+		Rectangulo(Coordenada lowerLeft, Coordenada upperRight);
+		Coordenada getLowerLeft();
+		Coordenada getUpperRight();
+		double obtieneArea();
+};
+
+#endif
+
+----------------------------------------------------------------------------------------------------
+
+#include "Rectangulo.h"
+#include <cmath>
+
+Rectangulo::Rectangulo(): lowerLeft(), upperRight() {}
+
+Rectangulo::Rectangulo(Coordenada lowerLeft, Coordenada upperRight): lowerLeft(lowerLeft), upperRight(upperRight) {}
+
+Coordenada Rectangulo::getLowerLeft() {
+	return lowerLeft;
+}
+
+Coordenada Rectangulo::getUpperRight() {
+	return upperRight;
+}
+
+double Rectangulo::obtieneArea() {
+	double a = abs(upperRight.getX() - lowerLeft.getX());
+	double b = abs(upperRight.getY() - lowerLeft.getY());
+	double c = abs(upperRight.getZ() - lowerLeft.getZ());
+	return a*b + a*c + b*c;
+}
+
+----------------------------------------------------------------------------------------------------
+
+#include <vector>
+#include "Rectangulo.h"
+using namespace std;
+
+#ifndef Ortoedro_H_
+#define Ortoedro_H_
+
+class Ortoedro {
+	private:
+		Coordenada lowerLeft;
+		Coordenada upperRight;
+		Rectangulo bottom;
+		Rectangulo top;
+		Rectangulo left;
+		Rectangulo right;
+		Rectangulo front;
+		Rectangulo back;
+	public:
+		Ortoedro();
+		Ortoedro(Coordenada lowerLeft, Coordenada upperRight);
+		vector<Coordenada> obtieneVertices();
+		double obtieneArea();
+		double obtieneVolumen();
+};
+
+#endif
+
+----------------------------------------------------------------------------------------------------
+
+#include "Ortoedro.h"
+#include <cmath>
+
+Ortoedro::Ortoedro(): lowerLeft(), upperRight() {}
+
+Ortoedro::Ortoedro(Coordenada lowerLeft, Coordenada upperRight): lowerLeft(lowerLeft), upperRight(upperRight) {
+	double a = lowerLeft.getX();
+	double b = lowerLeft.getY();
+	double c = lowerLeft.getZ();
+	double d = upperRight.getX();
+	double e = upperRight.getY();
+	double f = upperRight.getZ();
+	bottom = Rectangulo(Coordenada(a, b, c), Coordenada(d, b, f));
+	top = Rectangulo(Coordenada(a, e, c), Coordenada(d, e, f));
+	left = Rectangulo(Coordenada(a, b, c), Coordenada(a, e, f));
+	right = Rectangulo(Coordenada(d, b, c), Coordenada(d, e, f));
+	front = Rectangulo(Coordenada(a, b, f), Coordenada(d, e, f));
+	back = Rectangulo(Coordenada(a, b, c), Coordenada(d, e, c));
+}
+
+vector<Coordenada> Ortoedro::obtieneVertices() {
+	double a = lowerLeft.getX();
+	double b = lowerLeft.getY();
+	double c = lowerLeft.getZ();
+	double d = upperRight.getX();
+	double e = upperRight.getY();
+	double f = upperRight.getZ();
+	vector<Coordenada> ans;
+	ans.emplace_back(a, b, c);
+	ans.emplace_back(a, b, f);
+	ans.emplace_back(d, b, f);
+	ans.emplace_back(d, b, c);
+	ans.emplace_back(a, e, c);
+	ans.emplace_back(a, e, f);
+	ans.emplace_back(d, e, f);
+	ans.emplace_back(d, e, c);
+	return ans;
+}
+
+double Ortoedro::obtieneArea() {
+	return bottom.obtieneArea() + top.obtieneArea() + left.obtieneArea() + right.obtieneArea() + front.obtieneArea() + back.obtieneArea();
+}
+
+double Ortoedro::obtieneVolumen() {
+	double a = abs(upperRight.getX() - lowerLeft.getX());
+	double b = abs(upperRight.getY() - lowerLeft.getY());
+	double c = abs(upperRight.getZ() - lowerLeft.getZ());
+	return a*b*c;
+}
+
+----------------------------------------------------------------------------------------------------
+
+#include <iostream>
+#include <iomanip>
+#include "Ortoedro.h"
+using namespace std;
+
+int main() {
+	double a, b, c, d, e, f;
+	cout << "Introduce las 3 coordenadas de la esquina inferior izquierda: ";
+	cin >> a >> b >> c;
+	cout << "Introduce las 3 coordenadas de la esquina superior derecha: ";
+	cin >> d >> e >> f;
+	Ortoedro o(Coordenada(a, b, c), Coordenada(d, e, f));
+	cout << "Vertices:\n";
+	for (Coordenada v : o.obtieneVertices()) {
+		cout << "(" << v.getX() << ", " << v.getY() << ", " << v.getZ() << ")\n";
+	}
+	cout << "Area: " << o.obtieneArea() << "\n";
+	cout << "Volumen: " << o.obtieneVolumen() << "\n";
+	return 0;
+}
+
+****************************************************************************************************
+
+#ifndef Number_H_
+#define Number_H_
+
+class Number {
+	public:
+		int value;
+		bool isPrime;
+};
+
+#endif
+
+----------------------------------------------------------------------------------------------------
+
+#include <iostream>
+#include <vector>
+#include "Number.h"
+using namespace std;
+
+vector<Number> sieve(int n) {
+	vector<Number> numbers(n + 1);
+	for (int i = 0; i <= n; ++i) {
+		numbers[i].value = i;
+		numbers[i].isPrime = true;
+	}
+	numbers[0].isPrime = numbers[1].isPrime = false;
+	for (int i = 4; i <= n; i += 2) {
+		numbers[i].isPrime = false;
+	}
+	for (int i = 3; i * i <= n; i += 2) {
+		if (numbers[i].isPrime) {
+			for (int j = i * i; j <= n; j += 2 * i) {
+				numbers[j].isPrime = false;
+			}
+		}
+	}
+	return numbers;
+}
+
+int main(){
+	int n;
+	cout << "N = ";
+	cin >> n;
+	vector<Number> numbers = sieve(n);
+	cout << "Primes less than or equal to " << n << ":\n";
+	vector<Number>::iterator it;
+	for (it = numbers.begin(); it != numbers.end(); ++it) {
+		if (it->isPrime) {
+			cout << it->value << "\n";
+		}
+	}
+	return 0;
+}
