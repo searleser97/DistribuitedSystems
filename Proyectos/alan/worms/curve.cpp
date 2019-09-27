@@ -2,6 +2,10 @@
 #include "point.h"
 #include <cmath>
 
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+
 Curve::Curve(){}
 
 Curve::Curve(const Point & a0, const Point & v, int type, const double & R, const double & w): a0(a0), v(v), type(type), R(R), w(w) {}

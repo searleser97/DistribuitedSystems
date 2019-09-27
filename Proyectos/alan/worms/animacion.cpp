@@ -3,11 +3,16 @@
 #include <vector>
 #include <deque>
 #include <cmath>
-#include <unistd.h>
+#include <chrono>
+#include <thread>
 #include "gfx.h"
 #include "point.h"
 #include "worm.h"
 using namespace std;
+
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
 
 int main(int argc, char* argv[]) {
 	if (argc < 2) {
@@ -44,7 +49,7 @@ int main(int argc, char* argv[]) {
 			samples[i].push_back(worms[i].getNextPoint());
 		}
 		gfx_flush();
-		usleep(1e6 / 100);
+		std::this_thread::sleep_for(std::chrono::microseconds(1000000 / 100));
 	}
 	return 0;
 }
