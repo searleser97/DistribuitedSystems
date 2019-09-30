@@ -21,7 +21,7 @@ int Worm::aleatorio_int(int a, int b){
 }
 
 Worm::Worm(double velocity): velocity(velocity) {
-	Point a0(Worm::aleatorio(400, 600), Worm::aleatorio(400, 600));
+	Point a0(Worm::aleatorio(0, 1024), Worm::aleatorio(0, 768));
 	double theta = Worm::aleatorio(0, 2 * M_PI);
 	Point v = Point(cos(theta), sin(theta)) * velocity;
 	double R = Worm::aleatorio(10, 200);
