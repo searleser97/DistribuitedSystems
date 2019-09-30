@@ -9,7 +9,7 @@
 using namespace std;
 
 mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
-// std::default_random_engine rng;
+
 double Worm::aleatorio(double a, double b) {
 	uniform_real_distribution<double> dist(a, b);
 	return dist(rng);
