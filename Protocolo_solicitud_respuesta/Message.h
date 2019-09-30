@@ -2,8 +2,9 @@
 #define TAM_MAX_DATA 4000
 class Code
 {
-    enum kindMessage: int {solicitud = 0, respuesta};
-    enum allowedOperations: int {suma = 1};
+    public:
+        enum kindMessage: int {solicitud = 0, respuesta};
+        enum allowedOperations: int {suma = 1};
 };
 
 

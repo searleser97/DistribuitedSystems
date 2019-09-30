@@ -26,6 +26,10 @@ PaqueteDatagrama::~PaqueteDatagrama() {
 	delete this->datos;
 }
 
+PaqueteDatagrama::PaqueteDatagrama() {
+	
+}
+
 void PaqueteDatagrama::inicializaPuerto(int puerto) {
 	this->puerto = puerto;
 }

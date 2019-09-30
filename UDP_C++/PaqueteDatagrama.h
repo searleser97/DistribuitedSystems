@@ -6,6 +6,7 @@ class PaqueteDatagrama {
 		PaqueteDatagrama(const char * datos, unsigned int longitud, const char * ip, int puerto);
 		PaqueteDatagrama(unsigned int longitud);
 		~PaqueteDatagrama();
+		PaqueteDatagrama();
 		char *obtieneDireccion();
 		unsigned int obtieneLongitud();
 		int obtienePuerto();
