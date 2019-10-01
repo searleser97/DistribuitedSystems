@@ -11,9 +11,9 @@ class Code
 class Message {
 
     public:
-        int messageType;    
+        Code::kindMessage messageType;    
         unsigned int requestId;
-        int operationId;
+        Code::allowedOperations operationId;
         char arguments[TAM_MAX_DATA];
 };
 

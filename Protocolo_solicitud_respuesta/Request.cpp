@@ -18,7 +18,7 @@ char *Request::doOperation(char *IP, int port,
   msg->messageType = Code::solicitud;
   msg->requestId = random(1, 1 << 30);
   msg->operationId = operation;
-  memcpy(arguments, msg->arguments, sizeof(Message));
+  memcpy(msg->arguments, arguments, sizeof(msg->arguments));
   PaqueteDatagrama pq((char *)msg, sizeof(Message), IP, port);
   SocketDatagrama sock;
   sock.envia(pq);
