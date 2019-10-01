@@ -10,6 +10,7 @@ char Request::*doOperation(char *IP, int port, Code::allowedOperations operation
     if(operation == Code::allowedOperations::suma)
     {       
         paqueteData = PaqueteDatagrama((char*) arguments, 2 * sizeof(int), IP, port);
+        
     }
     else
     {
