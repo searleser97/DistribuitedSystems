@@ -10,7 +10,7 @@ int main(int argc, char * argv[]) {
   int args[2];
   args[0] = a;
   args[1] = b;
-  Request* req;
+  Request* req = new Request();
   Message* msg = (Message*) req->doOperation(ip, port, Code::allowedOperations::suma, (char*) args);
   cout << msg->arguments[0] << endl;
   return 0;
