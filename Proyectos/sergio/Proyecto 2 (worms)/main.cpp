@@ -2,26 +2,36 @@
 using namespace std;
 #include "gfx.h"
 #include "util.h"
+#include "point.h"
+#include "color.h"
+#include "worm.h"
 
-int main() {
-  int w = 500, h = 500;
-  gfx_open(w, h, "Worms");
-  gfx_clear();
-  for (int i = 0; i < w; i++) {
-    gfx_point(1, i);
-    std::this_thread::sleep_for(std::chrono::seconds(1));
+int main(int argc, char * argv[]) {
+  if (argc < 2) {
+    cout << "Bad usage: please add number of worms" << endl;
+    return 0;
+  }
+  int n = stoi(argv[1]);
+  int wormSize = 30;
+  int screenW = 500, screenH = 500;
+  gfx_open(screenW, screenH, "Worms");
+  vector<Worm> worms;
+  for (int i = 0; i < n; i++) {
+    worms.emplace_back(wormSize, screenW, screenH);
   }
 
-  // while (true) {
-  //   gfx_clear();
-  //   for (int i = 0; i <= h; i++) {
-  //     gfx_color(Util::random(0, 255), Util::random(0, 255), Util::random(0,
-  //     255)); for (int j = 0; j <= w; j++) {
-  //       gfx_point(j, j);
-  //     }
-  //   }
-  //   gfx_flush();
-  // 	std::this_thread::sleep_for(std::chrono::microseconds(1000000 / 100));
-  // }
+  while (true) {
+    gfx_clear();
+    for (auto &worm : worms) {
+      Color color = worm.getColor();
+      gfx_color(color.R(), color.G(), color.B());
+      for (auto &point : worm.getPoints()) {
+        gfx_point(point.X(), point.Y());
+      }
+      gfx_flush();
+      worm.move();
+    }
+    std::this_thread::sleep_for(std::chrono::milliseconds(10));
+  }
   return 0;
 }
