@@ -1,4 +1,4 @@
-#include "../UDP_C++/SocketDatagrama.h"
+#include "SocketDatagrama.h"
 
 class Respuesta {
     public:
