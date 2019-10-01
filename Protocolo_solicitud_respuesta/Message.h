@@ -1,3 +1,5 @@
+#ifndef MESSAGE_H
+#define MESSAGE_H
 
 #define TAM_MAX_DATA 4000
 class Code
@@ -11,9 +13,10 @@ class Code
 class Message {
 
     public:
-        int messageType;    
+        Code::kindMessage messageType;    
         unsigned int requestId;
-        int operationId;
+        Code::allowedOperations operationId;
         char arguments[TAM_MAX_DATA];
 };
 
+#endif
