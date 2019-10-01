@@ -5,6 +5,7 @@
 #include <random>
 #include <stdlib.h>
 #include <string.h>
+#include <iostream>
 
 std::mt19937_64
     seed(std::chrono::steady_clock::now().time_since_epoch().count());
@@ -22,8 +23,10 @@ char *Request::doOperation(char *IP, int port,
   PaqueteDatagrama pq((char *)msg, sizeof(Message), IP, port);
   SocketDatagrama sock;
   sock.envia(pq);
+  std::cout << "alo" << std::endl;
   PaqueteDatagrama pqresp(sizeof(Message));
   sock.recibe(pqresp);
+  std::cout << "efe" << std::endl;
   return pqresp.obtieneDatos();
 }
 

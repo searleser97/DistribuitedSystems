@@ -4,9 +4,9 @@ using namespace std;
 #include "Message.h"
 
 int main(int argc, char * argv[]) {
-  int port = 1000;
   int a = stoi(argv[1]), b = stoi(argv[2]);
   char * ip = argv[3];
+  int port = stoi(argv[4]);
   int args[2];
   args[0] = a;
   args[1] = b;
