@@ -12,6 +12,6 @@ int main(int argc, char * argv[]) {
   args[1] = b;
   Request* req = new Request();
   Message* msg = (Message*) req->doOperation(ip, port, Code::allowedOperations::suma, (char*) args);
-  cout << msg->arguments[0] << endl;
+  cout << (int*) msg->arguments << endl;
   return 0;
 }

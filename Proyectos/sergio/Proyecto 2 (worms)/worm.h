@@ -12,6 +12,8 @@ class Worm {
     Color color;
     int xLimit;
     int yLimit;
+    Point direction;
+    enum Move { turnRight, turnLeft, goStraight };
   public:
     Worm();
     Worm(int size, int screenW, int screenH);

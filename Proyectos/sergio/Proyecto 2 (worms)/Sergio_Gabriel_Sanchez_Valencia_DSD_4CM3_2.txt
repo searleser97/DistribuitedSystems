@@ -1,0 +1,298 @@
+#include "gfx.h"
+#include "util.h"
+#include "point.h"
+#include "color.h"
+#include "worm.h"
+
+using namespace std;
+
+int main(int argc, char * argv[]) {
+  if (argc < 2) {
+    cout << "Bad usage: please add number of worms" << endl;
+    return 0;
+  }
+  int n = stoi(argv[1]);
+  int wormSize = 50;
+  int screenW = 500, screenH = 500;
+  gfx_open(screenW, screenH, "Worms");
+  vector<Worm> worms;
+  for (int i = 0; i < n; i++) {
+    worms.emplace_back(wormSize, screenW, screenH);
+  }
+
+  while (true) {
+    gfx_clear();
+    for (auto &worm : worms) {
+      Color color = worm.getColor();
+      gfx_color(color.R(), color.G(), color.B());
+      for (auto &point : worm.getPoints()) {
+        gfx_point(point.X(), point.Y());
+      }
+      gfx_flush();
+      worm.move();
+    }
+    std::this_thread::sleep_for(std::chrono::milliseconds(10));
+  }
+  return 0;
+}
+
+-------------------------------------------------------------------
+
+#ifndef COLOR_H
+#define COLOR_H
+class Color {
+  private:
+    int red;
+    int green;
+    int black;
+  public:
+    Color();
+    Color(int r, int g, int b);
+    int R();
+    int G();
+    int B();
+};
+#endif
+
+-------------------------------------------------------------------
+
+#include "color.h"
+#include "util.h"
+
+Color::Color() {
+  red = Util::random(0, 255);
+  green = Util::random(0, 255);
+  black = Util::random(0, 255);
+}
+
+Color::Color(int r, int g, int b) : red(r), green(g), black(b) {}
+
+int Color::R() {
+  return red;
+}
+
+int Color::G() {
+  return green;
+}
+
+int Color::B() {
+  return black;
+}
+
+-------------------------------------------------------------------
+
+#ifndef POINT_H
+#define POINT_H
+class Point {
+private:
+  double x;
+  double y;
+public:
+  Point();
+  Point(double, double);
+  double X() const;
+  double Y() const;
+  Point operator+(const Point&) const;
+  Point operator-(const Point&) const;
+  Point rotate(double deg);
+  double magnitude() const;
+};
+#endif
+
+-------------------------------------------------------------------
+
+#include "point.h"
+#include "util.h"
+#include <cmath>
+
+Point::Point() {}
+
+Point::Point(double x, double y) : x(x), y(y) {}
+
+double Point::X() const {
+  return x;
+}
+
+double Point::Y() const {
+  return y;
+}
+
+Point Point::operator+(const Point &p) const {
+  return Point(x + p.x, y + p.y);
+}
+
+Point Point::operator-(const Point &p) const {
+  return Point(x - p.x, y - p.y);
+}
+
+Point Point::rotate(double deg) {
+  double rad = (deg * Util::PI) / 180.0;
+  double xx = x * cos(rad) - y * sin(rad);
+  double yy = x * sin(rad) + y * cos(rad);
+  return Point(xx, yy);
+}
+
+-------------------------------------------------------------------
+
+#ifndef UTIL_H
+#define UTIL_H
+#include "point.h"
+class Util {
+  public:
+    static const double PI;
+    static int random(int min, int max);
+    static double random(double min, double max);
+    static int mod(int a, int b);
+    static Point mod(const Point &p, int xLimit, int yLimit);
+};
+#endif
+
+-------------------------------------------------------------------
+
+#include "util.h"
+#include <chrono>
+#include <random>
+#include <cmath>
+using namespace std;
+mt19937_64 seed(chrono::steady_clock::now().time_since_epoch().count());
+
+const double Util::PI = acos(-1);
+
+int Util::random(int min, int max) { // [min, max]
+  return uniform_int_distribution<int>(min, max)(seed);
+}
+double Util::random(double min, double max) { // [min, max)
+  return uniform_real_distribution<double>(min, max)(seed);
+}
+
+int Util::mod(int a, int b) {
+  if (a < 0 && b >= 0)
+    return a % b + b;
+  if (a >= 0 && b < 0)
+    return -(a % b + b);
+  return a % b;
+}
+
+Point Util::mod(const Point &p, int xLimit, int yLimit) {
+  double x = p.X(), y = p.Y();
+  if (p.X() > xLimit) {
+    x = 0;
+  }else if (p.X() < 0) {
+    x = xLimit;
+  }
+  if (p.Y() > yLimit) {
+    y = 0;
+  }else if (p.Y() < 0) {
+    y = yLimit;
+  }
+  return Point(x, y);
+}
+
+-------------------------------------------------------------------
+
+#ifndef WORM_H
+#define WORM_H
+#include "point.h"
+#include "color.h"
+#include <deque>
+class Worm {
+  private:
+    std::deque<Point> points;
+    void pushPointInFront(const Point p);
+    void popPointFromBack();
+    Point nextPoint();
+    Color color;
+    int xLimit;
+    int yLimit;
+    Point direction;
+    enum Move { turnRight, turnLeft, goStraight };
+  public:
+    Worm();
+    Worm(int size, int screenW, int screenH);
+    int size();
+    void move();
+    std::deque<Point> getPoints();
+    Color getColor();
+};
+#endif
+
+-------------------------------------------------------------------
+
+#include "worm.h"
+#include "point.h"
+#include "util.h"
+#include <cmath>
+#include <iostream>
+using namespace std;
+
+Worm::Worm(int size, int screenW, int screenH)
+    : xLimit(screenW), yLimit(screenH) {
+  pushPointInFront(Point(Util::random(0, screenW), Util::random(0, screenH)));
+  double rad = (Util::random(0, 360) * Util::PI) / 180.0;
+  direction = Point(std::cos(rad), std::sin(rad));
+  for (int i = 1; i < size; i++) {
+    pushPointInFront(nextPoint());
+  }
+  color = Color();
+}
+
+int Worm::size() { return points.size(); }
+
+Point Worm::nextPoint() {
+  Move currMove = (Move)Util::random(0, 2);
+  Point next;
+  if (currMove == Move::turnLeft) {
+    double rad = (Util::random(0, 360) * Util::PI) / 180.0;
+    direction = Point(std::cos(rad), std::sin(rad));
+    next = points.front() + direction;
+  } else if (currMove == Move::turnRight) {
+    double rad = (Util::random(0, 360) * Util::PI) / 180.0;
+    direction = Point(std::cos(rad), std::sin(rad));
+    next = points.front() + direction;
+  } else {
+    next = points.front() + direction;
+  }
+  return Util::mod(next, xLimit, yLimit);
+}
+
+void Worm::pushPointInFront(const Point p) { points.push_front(p); }
+
+void Worm::popPointFromBack() { points.pop_back(); }
+
+void Worm::move() {
+  popPointFromBack();
+  pushPointInFront(nextPoint());
+  cout << points.front().X() << " " << points.front().Y() << endl;
+}
+
+std::deque<Point> Worm::getPoints() { return points; }
+
+Color Worm::getColor() { return color; }
+
+-------------------------------------------------------------------
+
+
+all: main
+
+gfx.o: gfx.c
+	gcc -c gfx.c -Wall
+
+util.o: util.cpp
+	g++ -c util.cpp -std=c++11 -Wall
+
+point.o: point.cpp
+	g++ -c point.cpp -std=c++11 -Wall
+
+color.o: color.cpp
+	g++ -c color.cpp -std=c++11 -Wall
+
+worm.o: worm.cpp
+	g++ -c worm.cpp -std=c++11 -Wall
+
+main: gfx.o util.o point.o color.o worm.o main.o
+	g++ gfx.o util.o point.o color.o worm.o main.cpp -o main -std=c++11 -lX11 -Wall
+
+.PHONY: clean
+
+clean:
+	rm -rf *.o *.exe

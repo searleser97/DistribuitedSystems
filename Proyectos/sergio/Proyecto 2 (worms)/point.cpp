@@ -2,13 +2,15 @@
 #include "util.h"
 #include <cmath>
 
+Point::Point() {}
+
 Point::Point(double x, double y) : x(x), y(y) {}
 
-double Point::X() {
+double Point::X() const {
   return x;
 }
 
-double Point::Y() {
+double Point::Y() const {
   return y;
 }
 
@@ -21,8 +23,8 @@ Point Point::operator-(const Point &p) const {
 }
 
 Point Point::rotate(double deg) {
-  deg = (deg * Util::PI) / 180;
-  double xx = x * cos(deg) - y * sin(deg);
-  double yy = x * sin(deg) + y * cos(deg);
+  double rad = (deg * Util::PI) / 180.0;
+  double xx = x * cos(rad) - y * sin(rad);
+  double yy = x * sin(rad) + y * cos(rad);
   return Point(xx, yy);
 }

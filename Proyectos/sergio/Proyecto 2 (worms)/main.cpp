@@ -12,7 +12,7 @@ int main(int argc, char * argv[]) {
     return 0;
   }
   int n = stoi(argv[1]);
-  int wormSize = 30;
+  int wormSize = 50;
   int screenW = 500, screenH = 500;
   gfx_open(screenW, screenH, "Worms");
   vector<Worm> worms;

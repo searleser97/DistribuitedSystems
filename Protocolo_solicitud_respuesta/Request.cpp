@@ -26,7 +26,6 @@ char *Request::doOperation(char *IP, int port,
   std::cout << "alo" << std::endl;
   PaqueteDatagrama pqresp(sizeof(Message));
   sock.recibe(pqresp);
-  std::cout << "efe" << std::endl;
   return pqresp.obtieneDatos();
 }
 

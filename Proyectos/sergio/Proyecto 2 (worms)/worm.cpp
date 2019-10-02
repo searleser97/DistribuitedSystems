@@ -1,62 +1,50 @@
 #include "worm.h"
+#include "point.h"
 #include "util.h"
+#include <cmath>
+#include <iostream>
+using namespace std;
 
-Worm::Worm(int size, int screenW, int screenH) : xLimit(screenW), yLimit(screenH) {
-  pushPointInFront(Point(Util::random((int)0, (int)screenW),
-                  Util::random((int)0, (int)screenH)));
+Worm::Worm(int size, int screenW, int screenH)
+    : xLimit(screenW), yLimit(screenH) {
+  pushPointInFront(Point(Util::random(0, screenW), Util::random(0, screenH)));
+  double rad = (Util::random(0, 360) * Util::PI) / 180.0;
+  direction = Point(std::cos(rad), std::sin(rad));
   for (int i = 1; i < size; i++) {
     pushPointInFront(nextPoint());
   }
   color = Color();
 }
 
-int Worm::size() {
-  return points.size();
-}
-
-int lastMove = 1;
-enum Move {
-  turnRight,
-  turnLeft,
-  goStraight
-};
+int Worm::size() { return points.size(); }
 
 Point Worm::nextPoint() {
-  Point front = points.front();
-  Move currMove = (Move) Util::random(1, 3);
-  int x, y;
+  Move currMove = (Move)Util::random(0, 2);
+  Point next;
   if (currMove == Move::turnLeft) {
-
+    double rad = (Util::random(0, 360) * Util::PI) / 180.0;
+    direction = Point(std::cos(rad), std::sin(rad));
+    next = points.front() + direction;
   } else if (currMove == Move::turnRight) {
-
+    double rad = (Util::random(0, 360) * Util::PI) / 180.0;
+    direction = Point(std::cos(rad), std::sin(rad));
+    next = points.front() + direction;
   } else {
-    if (lastMove != Move::goStraight) {
-
-    }
-
+    next = points.front() + direction;
   }
-  lastMove = currMove;
-  return Point(x, y);
-  // return Point(Util::mod(front.X() + 1, xLimit), Util::mod(front.Y(), yLimit));
+  return Util::mod(next, xLimit, yLimit);
 }
 
-void Worm::pushPointInFront(const Point p) {
-  points.push_front(p);
-}
+void Worm::pushPointInFront(const Point p) { points.push_front(p); }
 
-void Worm::popPointFromBack() {
-  points.pop_back();
-}
+void Worm::popPointFromBack() { points.pop_back(); }
 
 void Worm::move() {
-  pushPointInFront(nextPoint());
   popPointFromBack();
+  pushPointInFront(nextPoint());
+  cout << points.front().X() << " " << points.front().Y() << endl;
 }
 
-std::deque<Point> Worm::getPoints() {
-  return points;
-}
+std::deque<Point> Worm::getPoints() { return points; }
 
-Color Worm::getColor() {
-  return color;
-}
+Color Worm::getColor() { return color; }

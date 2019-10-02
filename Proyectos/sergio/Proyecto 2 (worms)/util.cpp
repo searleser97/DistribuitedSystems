@@ -21,3 +21,18 @@ int Util::mod(int a, int b) {
     return -(a % b + b);
   return a % b;
 }
+
+Point Util::mod(const Point &p, int xLimit, int yLimit) {
+  double x = p.X(), y = p.Y();
+  if (p.X() > xLimit) {
+    x = 0;
+  }else if (p.X() < 0) {
+    x = xLimit;
+  }
+  if (p.Y() > yLimit) {
+    y = 0;
+  }else if (p.Y() < 0) {
+    y = yLimit;
+  }
+  return Point(x, y);
+}
