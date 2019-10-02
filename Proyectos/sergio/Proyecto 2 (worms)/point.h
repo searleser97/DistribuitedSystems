@@ -11,7 +11,10 @@ public:
   double Y() const;
   Point operator+(const Point&) const;
   Point operator-(const Point&) const;
+  Point operator*(const double&) const;
   Point rotate(double deg);
   double magnitude() const;
+  Point perpendicularRight();
+  Point perpendicularLeft();
 };
 #endif

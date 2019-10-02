@@ -13,7 +13,16 @@ class Worm {
     int xLimit;
     int yLimit;
     Point direction;
-    enum Move { turnRight, turnLeft, goStraight };
+    Point initCirclePoint;
+    Point circleCenter;
+    Point radius;
+    Point unitRadius;
+    int deg;
+    enum Move { turnLeft, turnRight, goStraight };
+    Move lastMove;
+    int rotateCountRight;
+    int straightCount;
+    int rotateCountLeft;
   public:
     Worm();
     Worm(int size, int screenW, int screenH);

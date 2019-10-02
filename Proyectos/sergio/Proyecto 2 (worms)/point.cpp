@@ -22,9 +22,21 @@ Point Point::operator-(const Point &p) const {
   return Point(x - p.x, y - p.y);
 }
 
+Point Point::operator*(const double &k) const {
+  return Point(x * k, y * k);
+}
+
 Point Point::rotate(double deg) {
   double rad = (deg * Util::PI) / 180.0;
   double xx = x * cos(rad) - y * sin(rad);
   double yy = x * sin(rad) + y * cos(rad);
   return Point(xx, yy);
+}
+
+Point Point::perpendicularLeft() {
+  return Point(-y, x);
+}
+
+Point Point::perpendicularRight() {
+  return Point(y, -x);
 }
