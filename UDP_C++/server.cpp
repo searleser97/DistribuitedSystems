@@ -1,26 +1,23 @@
 #include <iostream>
 #include <string>
-#include "SocketDatagrama.h"
-#include "PaqueteDatagrama.h"
+#include "DatagramSocket.h"
 
 using namespace std;
 
-
-int main(int argc, char* argv[])
-{
-	int puerto;
+int main(int argc, char* argv[]) {
+	uint16_t puerto;
 	cout << "Puerto en el que se va a escuchar: ";
 	cin >> puerto;
-	SocketDatagrama s(puerto);
+	DatagramSocket servidor(puerto);
 	cout << "Servidor iniciado...\n";
 	while(1){
-		PaqueteDatagrama p(1000);
-		s.recibe(p);
-		int *nums = (int*)p.obtieneDatos();
-		cout << "Solicitud enviada desde el cliente " << p.obtieneDireccion() << ":" << p.obtienePuerto() << " con los numeros " << nums[0] << ", " << nums[1] << "\n";
+		int nums[2];
+		DatagramPacket solicitud((char*)nums, sizeof(nums));
+		servidor.receive(solicitud);
+		cout << "Solicitud enviada desde el cliente " << solicitud.getAddress() << ":" << solicitud.getPort() << " con los numeros " << nums[0] << ", " << nums[1] << "\n";
 		int suma = nums[0] + nums[1];
-		PaqueteDatagrama respuesta((char*)&suma, sizeof(suma), p.obtieneDireccion(), p.obtienePuerto());
-		s.envia(respuesta);
+		DatagramPacket respuesta((char*)&suma, sizeof(suma), solicitud.getAddress(), solicitud.getPort());
+		servidor.send(respuesta);
 	}
 	return 0;
 }
