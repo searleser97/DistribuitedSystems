@@ -19,7 +19,9 @@ Worm::Worm(int size, int screenW, int screenH)
 }
 
 int Worm::size() { return points.size(); }
+
 int rotationTime = 30;
+
 Point Worm::nextPoint() {
   Move currMove = (Move)Util::random(0, 2);
   if (rotateCountLeft > 0)
@@ -31,7 +33,6 @@ Point Worm::nextPoint() {
   Point next;
   if (currMove == Move::turnLeft) {
     if (lastMove != Move::turnLeft || points.size() == 1) {
-      rotateCountLeft = rotationTime;
       radius = direction.perpendicularRight() * Util::random(10, 25);
       unitRadius = direction.perpendicularRight();
       circleCenter = points.front() + radius;
@@ -41,10 +42,9 @@ Point Worm::nextPoint() {
     rotateCountLeft--;
     direction = (unitRadius * -1).rotate(-deg).perpendicularRight();
     next = (radius * -1).rotate(-deg) + circleCenter;
-    deg += 3;
+    deg += 6;
   } else if (currMove == Move::turnRight) {
     if (lastMove != Move::turnRight || points.size() == 1) {
-      rotateCountRight = rotationTime;
       radius = direction.perpendicularLeft() * Util::random(10, 25);
       unitRadius = direction.perpendicularLeft();
       circleCenter = points.front() + radius;
