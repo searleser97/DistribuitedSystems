@@ -15,13 +15,13 @@ class DatagramSocket {
 		void unbind();
 		int send(DatagramPacket &p);
 		int receive(DatagramPacket &p);
+		int receiveTimeout(DatagramPacket & p, time_t seconds, suseconds_t microseconds);
 
 	private:
 		struct sockaddr_in localAddress;
 		struct sockaddr_in remoteAddress;
 		int s;
-		struct timeval;
-		int receiveTimeout(DatagramaPacket & p, time_t seconds, suseconds_t microseconds);
+		struct timeval timeout;
 };
 
 #endif
