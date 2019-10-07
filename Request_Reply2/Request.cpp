@@ -3,6 +3,7 @@
 #include <random>
 #include <stdlib.h>
 #include <string.h>
+#include <iostream>
 
 std::mt19937_64
 	seed(std::chrono::steady_clock::now().time_since_epoch().count());
@@ -24,7 +25,22 @@ char* Request::doOperation(const std::string addr, uint16_t iport, Message::allo
 
 	Message *msg2 = new Message();
 	DatagramPacket pqresp((char*)msg2, sizeof(Message));
-	sock.receive(pqresp);
+	int i;
+	for(i = 0; i < 7; i++) {
+		try
+		{
+			sock.receiveTimeout(pqresp, 3, 0);
+			break;
+		}
+		catch(const std::exception& e)
+		{
+			std::cerr << e.what() << '\n';
+		}
+	}
+	if(i == 7) {
+		std::cerr << "All attempts failed" << '\n';
+		return nullptr;
+	}
 	len_reply = msg2->length;
 	return msg2->arguments;
 }

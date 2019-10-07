@@ -20,7 +20,6 @@ int DatagramSocket::receiveTimeout(DatagramPacket & p, time_t seconds, suseconds
 
 	int n = recvfrom(s, p.getData(), p.getLength(), 0, (struct sockaddr*)&remoteAddress, &len);
 
-
 	if (n < 0) {
 		if (errno == EWOULDBLOCK)
 			throw "Timeout while receiving the packet";//fprintf(stderr, "Tiempo para recepción transcurrido\n");
