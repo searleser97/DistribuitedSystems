@@ -13,15 +13,18 @@ int random2(int min, int max) { // [min, max]
 using namespace std;
 
 int main(int argc, char *argv[]) {
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
   string ip;
   uint16_t puerto;
   int nums[2];
   int n;
-  cout << "Direccion IP del servidor: ";
+//   cout << "Direccion IP del servidor: ";
   cin >> ip;
-  cout << "Puerto del servidor: ";
+//   cout << "Puerto del servidor: ";
   cin >> puerto;
-  cout << "Numero de solicitudes: ";
+//   cout << "Numero de solicitudes: ";
   cin >> n;
 
   for (int i = 0; i < n; i++) {
@@ -33,8 +36,8 @@ int main(int argc, char *argv[]) {
       int *suma =
           (int *)r.doOperation(ip, puerto, Message::allowedOperations::sum,
                                (char *)nums, sizeof(nums), len_reply);
-      cout << "Respuesta desde el servidor con longitud " << len_reply << ": "
-           << *suma << "\n";
+    //   cout << "Respuesta desde el servidor con longitud " << len_reply << ": "
+    //        << *suma << "\n";
     } catch (const char *msg) {
       std::cerr << msg << endl;
       return -1;
