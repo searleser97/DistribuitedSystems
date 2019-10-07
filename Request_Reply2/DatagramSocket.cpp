@@ -4,8 +4,7 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <unistd.h>
-
-using namespace std;
+#include <iostream>
 
 DatagramSocket::DatagramSocket(): DatagramSocket(0) {}
 

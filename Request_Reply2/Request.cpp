@@ -32,14 +32,13 @@ char* Request::doOperation(const std::string addr, uint16_t iport, Message::allo
 			sock.receiveTimeout(pqresp, 3, 0);
 			break;
 		}
-		catch(const std::exception& e)
+		catch(const char* msg)
 		{
-			std::cerr << "errorsisimo" << '\n';
+			std::cerr << msg << '\n';
 		}
 	}
 	if(i == 7) {
-		std::cerr << "All attempts failed" << '\n';
-		return nullptr;
+		throw "All attempts failed";
 	}
 	len_reply = msg2->length;
 	return msg2->arguments;
