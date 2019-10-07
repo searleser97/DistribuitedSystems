@@ -34,7 +34,7 @@ char* Request::doOperation(const std::string addr, uint16_t iport, Message::allo
 		}
 		catch(const std::exception& e)
 		{
-			std::cerr << e.what() << '\n';
+			std::cerr << "errorsisimo" << '\n';
 		}
 	}
 	if(i == 7) {
