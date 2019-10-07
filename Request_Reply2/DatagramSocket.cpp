@@ -8,30 +8,6 @@
 
 DatagramSocket::DatagramSocket(): DatagramSocket(0) {}
 
-int DatagramSocket::receiveTimeout(DatagramPacket & p, time_t seconds, suseconds_t microseconds)
-{
-
-	timeout.tv_sec = seconds;
-	timeout.tv_usec = microseconds;	
-	setsockopt(s, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout));
-
-	socklen_t len = sizeof(remoteAddress);
-
-	int n = recvfrom(s, p.getData(), p.getLength(), 0, (struct sockaddr*)&remoteAddress, &len);
-
-	if (n < 0) {
-		if (errno == EWOULDBLOCK)
-			throw "Timeout while receiving the packet";//fprintf(stderr, "Tiempo para recepción transcurrido\n");
-		else
-			throw "Error while receiving the packet";
-	}
-
-	p.setPort(ntohs(remoteAddress.sin_port));
-	p.setAddress(std::string(inet_ntoa(remoteAddress.sin_addr)));
-	p.setLength(n);
-	return n;
-
-}
 DatagramSocket::DatagramSocket(uint16_t iport): DatagramSocket(iport, "0.0.0.0") {}
 
 DatagramSocket::DatagramSocket(uint16_t iport, const std::string & addr) {
@@ -56,6 +32,28 @@ void DatagramSocket::unbind() {
 int DatagramSocket::receive(DatagramPacket &p) {
 	socklen_t len = sizeof(remoteAddress);
 	int n = recvfrom(s, p.getData(), p.getLength(), 0, (struct sockaddr*)&remoteAddress, &len);
+	p.setPort(ntohs(remoteAddress.sin_port));
+	p.setAddress(std::string(inet_ntoa(remoteAddress.sin_addr)));
+	p.setLength(n);
+	return n;
+}
+
+int DatagramSocket::receiveTimeout(DatagramPacket & p, time_t seconds, suseconds_t microseconds) {
+	timeout.tv_sec = seconds;
+	timeout.tv_usec = microseconds;	
+	setsockopt(s, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout));
+
+	socklen_t len = sizeof(remoteAddress);
+
+	int n = recvfrom(s, p.getData(), p.getLength(), 0, (struct sockaddr*)&remoteAddress, &len);
+
+	if (n < 0) {
+		if (errno == EWOULDBLOCK)
+			throw "Timeout while receiving the packet";
+		else
+			throw "Error while receiving the packet";
+	}
+
 	p.setPort(ntohs(remoteAddress.sin_port));
 	p.setAddress(std::string(inet_ntoa(remoteAddress.sin_addr)));
 	p.setLength(n);

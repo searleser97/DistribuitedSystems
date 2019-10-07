@@ -21,24 +21,22 @@ char* Request::doOperation(const std::string addr, uint16_t iport, Message::allo
 
 	DatagramPacket pq((char*)msg, sizeof(Message), addr, iport);
 	DatagramSocket sock;
-	sock.send(pq);
 
 	Message *msg2 = new Message();
 	DatagramPacket pqresp((char*)msg2, sizeof(Message));
 	int i;
-	for(i = 0; i < 7; i++) {
-		try
-		{
+	for (i = 0; i < 7; i++) {
+		try {
+			sock.send(pq);
 			sock.receiveTimeout(pqresp, 3, 0);
 			break;
-		}
-		catch(const char* msg)
-		{
+		} catch(const char* msg) {
 			std::cerr << msg << '\n';
 		}
 	}
 	if(i == 7) {
-		throw "All attempts failed";
+		len_reply = 0;
+		throw "All attempts failed, server not available";
 	}
 	len_reply = msg2->length;
 	return msg2->arguments;
