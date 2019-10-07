@@ -20,6 +20,8 @@ class DatagramSocket {
 		struct sockaddr_in localAddress;
 		struct sockaddr_in remoteAddress;
 		int s;
+		struct timeval;
+		int receiveTimeout(DatagramaPacket & p, time_t seconds, suseconds_t microseconds);
 };
 
 #endif

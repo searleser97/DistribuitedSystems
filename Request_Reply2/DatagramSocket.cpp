@@ -9,6 +9,23 @@ using namespace std;
 
 DatagramSocket::DatagramSocket(): DatagramSocket(0) {}
 
+int DatagramSocket::receiveTimeout(DatagramaPacket & p, time_t seconds, suseconds_t microseconds)
+{
+	socklen_t len = sizeof(remoteAddress);
+
+	int n = recvfrom(s, p.getData(), p.getLength(), 0, (struct sockaddr*)&remoteAddress, &len);
+
+
+	timeval.tv_sec = seconds;
+	timeval.tv_usec = microseconds;	
+	
+
+	p.setPort(ntohs(remoteAddress.sin_port));
+	p.setAddress(std::string(inet_ntoa(remoteAddress.sin_addr)));
+	p.setLength(n);
+	return n;
+
+}
 DatagramSocket::DatagramSocket(uint16_t iport): DatagramSocket(iport, "0.0.0.0") {}
 
 DatagramSocket::DatagramSocket(uint16_t iport, const std::string & addr) {
