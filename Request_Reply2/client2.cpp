@@ -5,9 +5,9 @@
 #include <random>
 
 std::mt19937_64
-	seed(std::chrono::steady_clock::now().time_since_epoch().count());
-int random(int min, int max) { // [min, max]
-  return std::uniform_int_distribution<int>(min, max)(seed);
+	seed2(std::chrono::steady_clock::now().time_since_epoch().count());
+int random2(int min, int max) { // [min, max]
+  return std::uniform_int_distribution<int>(min, max)(seed2);
 }
 
 
@@ -28,8 +28,8 @@ int main(int argc, char* argv[]) {
     for(int i = 0; i < n; i++) {
         Request r;
         size_t len_reply;
-        nums[0] = random(-100, 100);
-        nums[1] = random(-100, 100);
+        nums[0] = random2(-100, 100);
+        nums[1] = random2(-100, 100);
 
         int *suma = (int*)r.doOperation(ip, puerto, Message::allowedOperations::sum, (char*)nums, sizeof(nums), len_reply); 
         cout << "Respuesta desde el servidor con longitud " << len_reply << ": " << *suma << "\n";
