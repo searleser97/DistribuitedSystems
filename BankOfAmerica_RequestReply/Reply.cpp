@@ -14,11 +14,17 @@ Message* Reply::getRequest() {
 	port = pq.getPort();
 	operation = msg->operationId;
 	requestId = msg->requestId;
+	if (history.count({address, requestId})) {
+		auto saved = history[{address, requestId}];
+		sendReply(saved.first, saved.second);
+		return getRequest();
+	}
 
 	return msg;
 }
 
 void Reply::sendReply(const char *arguments, size_t len) {
+	history[{address, requestId}] = {arguments, len};
 	Message *msg = new Message();
 	msg->messageType = Message::kindMessages::reply;
 	msg->operationId = operation;

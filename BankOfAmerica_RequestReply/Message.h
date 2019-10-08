@@ -9,7 +9,7 @@ class Message {
 		enum allowedOperations: int {sum, transfer, getBalance};
 
 		Message::kindMessages messageType;    
-		unsigned int requestId;
+		uint64_t requestId;
 		Message::allowedOperations operationId;
 		char arguments[TAM_MAX_DATA];
 		size_t length;
