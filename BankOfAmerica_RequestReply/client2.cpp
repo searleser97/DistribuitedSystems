@@ -26,17 +26,23 @@ int main(int argc, char *argv[]) {
   cin >> puerto;
 //   cout << "Numero de solicitudes: ";
   cin >> n;
-
+  int suma = 0;
   for (int i = 0; i < n; i++) {
     Request r;
     size_t len_reply;
-    nums[0] = random2(1, 9);
+    suma += nums[0] = random2(1, 9);
     try {
       int balance =
           *(int *)r.doOperation(ip, puerto, Message::allowedOperations::transfer,
                                (char *)nums, sizeof(nums), len_reply);
       cout << "Respuesta desde el servidor con longitud " << len_reply << ": "
            << balance << "\n";
+      if (suma != balance) {
+        std::cerr << "Inconsistent data between client and server" << endl;
+        std::cerr << "expected: " << suma << endl;
+        std::cerr << "got: " << balance << endl;
+        return -1;
+      }
     } catch (const char *msg) {
       std::cerr << msg << endl;
       return -1;
