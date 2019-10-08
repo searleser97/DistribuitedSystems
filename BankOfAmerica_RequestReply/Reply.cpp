@@ -24,14 +24,13 @@ Message* Reply::getRequest() {
 }
 
 void Reply::sendReply(const char *arguments, size_t len) {
-	history[{address, requestId}] = {arguments, len};
 	Message *msg = new Message();
 	msg->messageType = Message::kindMessages::reply;
 	msg->operationId = operation;
 	msg->requestId = requestId;
 	memcpy(msg->arguments, arguments, len);
+	history[{address, requestId}] = {msg->arguments, len};
 	msg->length = len;
-
 	DatagramPacket paquete((char*)msg, sizeof(Message), address, port);
 	localSocket->send(paquete);
 }

@@ -1,7 +1,7 @@
 #ifndef MESSAGE_H
 #define MESSAGE_H
 
-#define TAM_MAX_DATA 50000
+#define TAM_MAX_DATA 50
 
 class Message {
 	public:
