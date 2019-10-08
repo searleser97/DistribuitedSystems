@@ -26,6 +26,8 @@ int main(int argc, char* argv[]) {
 		} else if (msg->operationId == Message::allowedOperations::transfer) {
 			nbd[r.address] += nums[0];
 			r.sendReply((char*)&nbd[r.address], sizeof(int));
+		} else if (msg->operationId == Message::allowedOperations::getBalance) {
+			r.sendReply((char*)&nbd[r.address], sizeof(int));
 		}
 		cout << "\n";
 	}
