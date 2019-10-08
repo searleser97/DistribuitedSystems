@@ -15,12 +15,12 @@ int main(int argc, char* argv[]) {
 	while(1){
 		Message *msg = r.getRequest();
 		int* nums = (int*)msg->arguments;
-		cout << "Solicitud enviada desde el cliente " << r.address << ":" << r.port << "\n";
-		cout << " requestId=" << msg->requestId << "\n";
-		cout << " operationId=" << msg->operationId << "\n";
-		cout << " sizeof(args)=" << msg->length << "\n";
+		// cout << "Solicitud enviada desde el cliente " << r.address << ":" << r.port << "\n";
+		// cout << " requestId=" << msg->requestId << "\n";
+		// cout << " operationId=" << msg->operationId << "\n";
+		// cout << " sizeof(args)=" << msg->length << "\n";
 		if (msg->operationId == Message::allowedOperations::sum) {
-			cout << " Numeros a sumar: " << nums[0] << " y " << nums[1] << "\n";
+			// cout << " Numeros a sumar: " << nums[0] << " y " << nums[1] << "\n";
 			int suma = nums[0] + nums[1];
 			r.sendReply((char*)&suma, sizeof(suma));
 		} else if (msg->operationId == Message::allowedOperations::transfer) {
@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) {
 		} else if (msg->operationId == Message::allowedOperations::getBalance) {
 			r.sendReply((char*)&nbd[r.address], sizeof(int));
 		}
-		cout << "\n";
+		// cout << "\n";
 	}
 	return 0;
 }
