@@ -18,7 +18,7 @@ int main(int argc, char *argv[]) {
     cout.tie(0);
   string ip;
   uint16_t puerto;
-  int nums[2];
+  int nums[1];
   int n;
 //   cout << "Direccion IP del servidor: ";
   cin >> ip;
@@ -30,14 +30,13 @@ int main(int argc, char *argv[]) {
   for (int i = 0; i < n; i++) {
     Request r;
     size_t len_reply;
-    nums[0] = random2(-100, 100);
-    nums[1] = random2(-100, 100);
+    nums[0] = random2(1, 9);
     try {
-      int *suma =
-          (int *)r.doOperation(ip, puerto, Message::allowedOperations::sum,
+      int balance =
+          *(int *)r.doOperation(ip, puerto, Message::allowedOperations::transfer,
                                (char *)nums, sizeof(nums), len_reply);
-    //   cout << "Respuesta desde el servidor con longitud " << len_reply << ": "
-    //        << *suma << "\n";
+      cout << "Respuesta desde el servidor con longitud " << len_reply << ": "
+           << balance << "\n";
     } catch (const char *msg) {
       std::cerr << msg << endl;
       return -1;
