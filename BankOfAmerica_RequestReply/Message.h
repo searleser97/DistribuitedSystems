@@ -5,8 +5,8 @@
 
 class Message {
 	public:
-		enum kindMessages: int {request = 0, reply};
-		enum allowedOperations: int {sum = 0};
+		enum kindMessages: int {request, reply};
+		enum allowedOperations: int {sum, transfer};
 
 		Message::kindMessages messageType;    
 		unsigned int requestId;
