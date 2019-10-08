@@ -45,3 +45,10 @@ int main(int argc, char *argv[]) {
   }
   return 0;
 }
+
+/*
+16   con impresion 20s con 100 pacquetes
+16   sin impresion 1s
+4000 con impresion 200s
+4000 sin impresion 100s
+*/
