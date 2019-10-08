@@ -13,9 +13,9 @@ int random2(int min, int max) { // [min, max]
 using namespace std;
 
 int main(int argc, char *argv[]) {
-  ios_base::sync_with_stdio(0);
-  cin.tie(0);
-  cout.tie(0);
+  // ios_base::sync_with_stdio(0);
+  // cin.tie(0);
+  // cout.tie(0);
   string ip;
   uint16_t puerto;
   int nums[1];
