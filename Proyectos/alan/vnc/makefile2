@@ -1,0 +1,24 @@
+all: bin bin/UDP_client bin/UDP_server bin/web_server
+
+bin:
+	mkdir bin
+
+bin/DatagramPacket.o: DatagramPacket.cpp DatagramPacket.h
+	g++ -c DatagramPacket.cpp -o bin/DatagramPacket.o -Wall -std=c++11
+
+bin/DatagramSocket.o: DatagramSocket.cpp DatagramSocket.h
+	g++ -c DatagramSocket.cpp -o bin/DatagramSocket.o -Wall -std=c++11
+
+bin/UDP_client: bin/DatagramPacket.o bin/DatagramSocket.o UDP_client.cpp Message.h Part.h
+	g++ bin/DatagramPacket.o bin/DatagramSocket.o UDP_client.cpp -o bin/UDP_client -Wall -std=c++11 -lpthread
+
+bin/UDP_server: DatagramPacket.o DatagramSocket.o UDP_server.cpp Message.h Part.h
+	g++ bin/DatagramPacket.o bin/DatagramSocket.o UDP_server.cpp -o bin/UDP_server -Wall -std=c++11 -lpthread
+
+bin/web_server: web_server.cpp mongoose.c
+	g++ web_server.cpp mongoose.c -o bin/web_server -Wall -std=c++11
+
+.PHONY: clean
+
+clean:
+	rm -rf bin/*
