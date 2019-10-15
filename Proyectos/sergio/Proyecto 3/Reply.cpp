@@ -28,9 +28,9 @@ void Reply::sendReply(const char *arguments, size_t len) {
 	msg->type = Message::Type::reply;
 	msg->operation = operation;
 	msg->requestId = requestId;
-	memcpy(msg->arguments, arguments, len);
-	history[{address, requestId}] = {msg->arguments, len};
 	msg->length = len;
+	memcpy(msg->arguments, arguments, msg->length);
+	history[{address, requestId}] = {msg->arguments, msg->length};
 	DatagramPacket paquete((char*)msg, sizeof(Message), address, port);
 	localSocket->send(paquete);
 }

@@ -5,6 +5,8 @@
 
 using namespace std;
 
+
+
 int main(int argc, char* argv[]) {
 	uint16_t puerto;
 	cout << "Puerto en el que se va a escuchar: ";
@@ -28,6 +30,9 @@ int main(int argc, char* argv[]) {
 			reply.sendReply((char*)&nbd[reply.address], sizeof(int));
 		} else if (msg->operation == Message::AllowedOperations::getBalance) {
 			reply.sendReply((char*)&nbd[reply.address], sizeof(int));
+		} else if (msg->operation == Message::AllowedOperations::image) {
+			char* data = getImage(ip, offset);
+			reply.sendReply((char*) data, sizeof(data));
 		}
 		// cout << "\n";
 	}

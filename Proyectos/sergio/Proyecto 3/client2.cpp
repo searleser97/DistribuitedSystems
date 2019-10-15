@@ -3,36 +3,36 @@
 #include <iostream>
 #include <random>
 #include <string>
-
-std::mt19937_64
-    seed2(std::chrono::steady_clock::now().time_since_epoch().count());
-int random2(int min, int max) { // [min, max]
-  return std::uniform_int_distribution<int>(min, max)(seed2);
-}
+#include "Util.h"
 
 using namespace std;
 
+void receiveImage() {
+  
+}
+
+void writeFile() {
+
+}
+
 int main(int argc, char *argv[]) {
-  // ios_base::sync_with_stdio(0);
-  // cin.tie(0);
-  // cout.tie(0);
+  ios_base::sync_with_stdio(0);
   string ip;
   uint16_t puerto;
   int nums[1];
   int n;
-  //   cout << "Direccion IP del servidor: ";
+  cout << "Direccion IP del servidor: ";
   cin >> ip;
-  //   cout << "Puerto del servidor: ";
+  cout << "Puerto del servidor: ";
   cin >> puerto;
-  //   cout << "Numero de solicitudes: ";
+  cout << "Numero de solicitudes: ";
   cin >> n;
   Request r;
   size_t len_reply;
-  int suma =
-      *(int *)r.doOperation(ip, puerto, Message::AllowedOperations::getBalance,
-                            NULL, 0, len_reply);
+  int suma = *(int *)r.doOperation(
+      ip, puerto, Message::AllowedOperations::getBalance, NULL, 0, len_reply);
   for (int i = 0; i < n; i++) {
-    suma += nums[0] = random2(1, 9);
+    suma += nums[0] = Util::random(1, 9);
     try {
       int balance = *(int *)r.doOperation(
           ip, puerto, Message::AllowedOperations::transfer, (char *)nums,

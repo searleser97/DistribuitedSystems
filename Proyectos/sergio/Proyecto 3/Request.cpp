@@ -4,17 +4,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include <iostream>
-
-std::mt19937_64
-	seed(std::chrono::steady_clock::now().time_since_epoch().count());
-uint64_t random(uint64_t min, uint64_t max) { // [min, max]
-  return std::uniform_int_distribution<uint64_t>(min, max)(seed);
-}
+#include "Util.h"
 
 char* Request::doOperation(const std::string addr, uint16_t iport, Message::AllowedOperations operation, char *arguments, size_t len, size_t & len_reply) {
 	Message *msg = new Message();
 	msg->type = Message::Type::request;
-	msg->requestId = random(0, std::numeric_limits<uint64_t>::max());
+	msg->requestId = Util::random(0, std::numeric_limits<uint64_t>::max());
 	msg->operation = operation;
 	memcpy(msg->arguments, arguments, len);
 	msg->length = len;
