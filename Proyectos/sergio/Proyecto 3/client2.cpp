@@ -29,13 +29,13 @@ int main(int argc, char *argv[]) {
   Request r;
   size_t len_reply;
   int suma =
-      *(int *)r.doOperation(ip, puerto, Message::allowedOperations::getBalance,
+      *(int *)r.doOperation(ip, puerto, Message::AllowedOperations::getBalance,
                             NULL, 0, len_reply);
   for (int i = 0; i < n; i++) {
     suma += nums[0] = random2(1, 9);
     try {
       int balance = *(int *)r.doOperation(
-          ip, puerto, Message::allowedOperations::transfer, (char *)nums,
+          ip, puerto, Message::AllowedOperations::transfer, (char *)nums,
           sizeof(nums), len_reply);
       cout << "Respuesta desde el servidor con longitud " << len_reply << ": "
            << balance << "\n";

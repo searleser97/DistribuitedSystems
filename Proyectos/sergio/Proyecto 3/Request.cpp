@@ -11,11 +11,11 @@ uint64_t random(uint64_t min, uint64_t max) { // [min, max]
   return std::uniform_int_distribution<uint64_t>(min, max)(seed);
 }
 
-char* Request::doOperation(const std::string addr, uint16_t iport, Message::allowedOperations operation, char *arguments, size_t len, size_t & len_reply) {
+char* Request::doOperation(const std::string addr, uint16_t iport, Message::AllowedOperations operation, char *arguments, size_t len, size_t & len_reply) {
 	Message *msg = new Message();
-	msg->messageType = Message::kindMessages::request;
+	msg->type = Message::Type::request;
 	msg->requestId = random(0, std::numeric_limits<uint64_t>::max());
-	msg->operationId = operation;
+	msg->operation = operation;
 	memcpy(msg->arguments, arguments, len);
 	msg->length = len;
 

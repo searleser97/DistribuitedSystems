@@ -17,7 +17,7 @@ class Reply {
 	private:
 		DatagramSocket *localSocket;
 		std::map<std::pair<std::string, uint64_t>, std::pair<const char*, size_t>> history;
-		Message::allowedOperations operation;
+		Message::AllowedOperations operation;
 };
 
 #endif

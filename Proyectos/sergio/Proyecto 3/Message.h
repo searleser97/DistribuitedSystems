@@ -1,16 +1,16 @@
 #ifndef MESSAGE_H
 #define MESSAGE_H
 
-#define TAM_MAX_DATA 50
+#define TAM_MAX_DATA 30000
 
 class Message {
 	public:
-		enum kindMessages: int {request, reply};
-		enum allowedOperations: int {sum, transfer, getBalance};
+		enum Type: int {request, reply};
+		enum AllowedOperations: int {sum, transfer, getBalance, image};
 
-		Message::kindMessages messageType;    
+		Message::Type type;    
 		uint64_t requestId;
-		Message::allowedOperations operationId;
+		Message::AllowedOperations operation;
 		char arguments[TAM_MAX_DATA];
 		size_t length;
 };

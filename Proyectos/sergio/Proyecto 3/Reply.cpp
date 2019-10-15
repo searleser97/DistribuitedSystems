@@ -12,7 +12,7 @@ Message* Reply::getRequest() {
 
 	address = pq.getAddress();
 	port = pq.getPort();
-	operation = msg->operationId;
+	operation = msg->operation;
 	requestId = msg->requestId;
 	if (history.count({address, requestId})) {
 		auto saved = history[{address, requestId}];
@@ -25,8 +25,8 @@ Message* Reply::getRequest() {
 
 void Reply::sendReply(const char *arguments, size_t len) {
 	Message *msg = new Message();
-	msg->messageType = Message::kindMessages::reply;
-	msg->operationId = operation;
+	msg->type = Message::Type::reply;
+	msg->operation = operation;
 	msg->requestId = requestId;
 	memcpy(msg->arguments, arguments, len);
 	history[{address, requestId}] = {msg->arguments, len};

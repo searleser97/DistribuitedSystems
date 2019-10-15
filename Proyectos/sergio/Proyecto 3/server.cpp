@@ -17,16 +17,16 @@ int main(int argc, char* argv[]) {
 		int* nums = (int*)msg->arguments;
 		// cout << "Solicitud enviada desde el cliente " << reply.address << ":" << reply.port << "\n";
 		// cout << " requestId=" << msg->requestId << "\n";
-		// cout << " operationId=" << msg->operationId << "\n";
+		// cout << " operation =" << msg->operation << "\n";
 		// cout << " sizeof(args)=" << msg->length << "\n";
-		if (msg->operationId == Message::allowedOperations::sum) {
+		if (msg->operation == Message::AllowedOperations::sum) {
 			// cout << " Numeros a sumar: " << nums[0] << " y " << nums[1] << "\n";
 			int suma = nums[0] + nums[1];
 			reply.sendReply((char*)&suma, sizeof(suma));
-		} else if (msg->operationId == Message::allowedOperations::transfer) {
+		} else if (msg->operation == Message::AllowedOperations::transfer) {
 			nbd[reply.address] += nums[0];
 			reply.sendReply((char*)&nbd[reply.address], sizeof(int));
-		} else if (msg->operationId == Message::allowedOperations::getBalance) {
+		} else if (msg->operation == Message::AllowedOperations::getBalance) {
 			reply.sendReply((char*)&nbd[reply.address], sizeof(int));
 		}
 		// cout << "\n";
