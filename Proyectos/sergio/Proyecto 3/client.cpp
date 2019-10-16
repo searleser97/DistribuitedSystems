@@ -24,7 +24,7 @@ void requestScreenShots(string serverIp, int port,
     try {
       ImagePacket *imgpack = (ImagePacket *)Request::doOperation(
           serverIp, port, Message::AllowedOperations::image,
-          (char *)new ImagePacket("", quality, nullptr), 0, len_reply);
+          (char *)new ImagePacket("", quality, nullptr, 0), sizeof(ImagePacket), len_reply);
       saveFile("ScreenShots/" + imgpack->name, imgpack->bytes,
                len_reply - sizeof(char) * imgpack->name.size() -
                    sizeof(unsigned short));

@@ -1,8 +1,11 @@
+#include <chrono>
+#include <fstream>
 #include <iostream>
+#include <string.h>
 #include <string>
 #include <sys/stat.h>
+#include <thread>
 #include <unordered_map>
-#include <fstream>
 
 #include "ImagePacket.h"
 #include "Reply.h"
@@ -22,20 +25,20 @@ size_t getFileSize(string path) {
 
 char *captureScreenShot(string path, u_short quality) {
   string sysCommand = "scrot -q " + to_string(quality) + " " + path;
-  cout << sysCommand << endl;
   system(sysCommand.c_str());
+  std::this_thread::sleep_for(std::chrono::milliseconds(200));
   ifstream file;
-  file.open(path, ios::in);
-  char * memblock;
+  file.open(path, ios::in | ios::binary | ios::ate);
+  char *img;
   if (file.is_open()) {
-    cout << "entro" << endl;
     streampos size = file.tellg();
-    memblock = new char[size];
+    img = new char[size];
     file.seekg(0, ios::beg);
-    file.read(memblock, size);
+    file.read(img, size);
+    char *aux = new char[size];
     file.close();
   }
-  return memblock;
+  return img;
 }
 
 int main(int argc, char *argv[]) {
@@ -64,12 +67,14 @@ int main(int argc, char *argv[]) {
     } else if (msg->operation == Message::AllowedOperations::image) {
       string filename = genFileName(reply.address, reply.requestId);
       ImagePacket *imgpackIn = (ImagePacket *)msg->arguments;
+      cout << imgpackIn->quality << endl;
       char *img = captureScreenShot("tmp/" + filename, imgpackIn->quality);
       size_t dataLen = getFileSize("tmp/" + filename);
+
       ImagePacket *imgpackOut =
-          new ImagePacket(filename, imgpackIn->quality, img);
+          new ImagePacket(filename, imgpackIn->quality, img, dataLen);
       reply.sendReply((char *)imgpackOut, dataLen + sizeof(unsigned short) +
-                                              sizeof(char) * filename.size());
+      sizeof(char) * filename.size());
     }
     // cout << "\n";
   }

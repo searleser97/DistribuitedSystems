@@ -19,6 +19,8 @@ Message *Reply::getRequest() {
   }
   return msg;
 }
+#include "ImagePacket.h"
+#include <iostream>
 
 void Reply::sendReply(const char *arguments, size_t len) {
   Message *msg = new Message();
@@ -26,14 +28,16 @@ void Reply::sendReply(const char *arguments, size_t len) {
   msg->operation = operation;
   msg->requestId = requestId;
   msg->length = len;
-  memcpy(msg->arguments, arguments, msg->length);
-  if (!history.count({address, requestId}))
-    history[{address, requestId}] = {msg->arguments, msg->length};
 
   if (msg->length > Message::MAX_DATA_SIZE) {
     msg->MF = 1;
 		msg->length = Message::MAX_DATA_SIZE;
   }
+  memcpy(msg->arguments, arguments, msg->length);
+  std::cout << sizeof(Message) << std::endl;
+  if (!history.count({address, requestId}))
+    history[{address, requestId}] = {msg->arguments, msg->length};
+
 	
   DatagramPacket paquete((char *)msg, sizeof(Message), address, port);
   localSocket->send(paquete);
