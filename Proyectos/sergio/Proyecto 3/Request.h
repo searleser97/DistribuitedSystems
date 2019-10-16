@@ -7,7 +7,6 @@
 class Request {
     public:
         Request();
-        char* doOperation(const std::string addr, uint16_t iport, Message::AllowedOperations operation, char *arguments, size_t len, size_t & len_reply);
+        static char* doOperation(const std::string addr, uint16_t iport, Message::AllowedOperations operation, char *arguments, size_t len, size_t & len_reply);
 };
-
 #endif
