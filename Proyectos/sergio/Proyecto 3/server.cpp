@@ -13,7 +13,7 @@
 
 using namespace std;
 
-string genFileName(string ip, int requestId) {
+string genFileName(string ip, uint64_t requestId) {
   return ip + "_" + to_string(requestId) + ".png";
 }
 
@@ -67,12 +67,10 @@ int main(int argc, char *argv[]) {
     } else if (msg->operation == Message::AllowedOperations::image) {
       string filename = genFileName(reply.address, reply.requestId);
       ImagePacket *imgpackIn = (ImagePacket *)msg->arguments;
-      cout << imgpackIn->quality << endl;
       char *img = captureScreenShot("tmp/" + filename, imgpackIn->quality);
       size_t dataLen = getFileSize("tmp/" + filename);
-
       ImagePacket *imgpackOut =
-          new ImagePacket(filename, imgpackIn->quality, img, dataLen);
+          new ImagePacket(filename.c_str(), imgpackIn->quality, img, dataLen);
       reply.sendReply((char *)imgpackOut, dataLen + sizeof(unsigned short) +
       sizeof(char) * filename.size());
     }

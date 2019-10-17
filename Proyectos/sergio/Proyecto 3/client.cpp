@@ -25,8 +25,12 @@ void requestScreenShots(string serverIp, int port,
       ImagePacket *imgpack = (ImagePacket *)Request::doOperation(
           serverIp, port, Message::AllowedOperations::image,
           (char *)new ImagePacket("", quality, nullptr, 0), sizeof(ImagePacket), len_reply);
-      saveFile("ScreenShots/" + imgpack->name, imgpack->bytes,
-               len_reply - sizeof(char) * imgpack->name.size() -
+      cout << "salioo" << endl;
+      cout << len_reply << endl;
+      cout << imgpack->name << endl;
+      cout << imgpack->quality << endl;
+      saveFile("ScreenShots/" + string(imgpack->name), imgpack->bytes,
+               len_reply - sizeof(char) * string(imgpack->name).size() -
                    sizeof(unsigned short));
     } catch (const char *msg) {
       std::cerr << msg << endl;

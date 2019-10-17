@@ -4,8 +4,8 @@
 class ImagePacket {
   public:
     ImagePacket();
-    ImagePacket(std::string name, unsigned short quality, char * bytes, size_t len);
-    std::string name;
+    ImagePacket(const char * name, unsigned short quality, char * bytes, size_t len);
+    char * name;
     unsigned short quality;
     char * bytes;
 };
