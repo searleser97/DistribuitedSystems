@@ -1,10 +1,9 @@
+#ifndef DatagramSocket_H_
+#define DatagramSocket_H_
 #include <cstddef>
 #include <string>
 #include <netinet/in.h>
 #include "DatagramPacket.h"
-
-#ifndef DatagramSocket_H_
-#define DatagramSocket_H_
 
 class DatagramSocket {
 	public:
@@ -17,7 +16,7 @@ class DatagramSocket {
 		int receive(DatagramPacket &p);
 		int receiveTimeout(DatagramPacket & p, time_t seconds, suseconds_t microseconds);
 
-	private:
+	protected:
 		struct sockaddr_in localAddress;
 		struct sockaddr_in remoteAddress;
 		int s;
