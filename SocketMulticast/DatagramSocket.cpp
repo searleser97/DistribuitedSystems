@@ -1,5 +1,6 @@
 #include "DatagramSocket.h"
 #include <netinet/in.h>
+#include <string.h>
 #include <strings.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
@@ -11,13 +12,24 @@ DatagramSocket::DatagramSocket(): DatagramSocket(0) {}
 DatagramSocket::DatagramSocket(uint16_t iport): DatagramSocket(iport, "0.0.0.0") {}
 
 DatagramSocket::DatagramSocket(uint16_t iport, const std::string & addr) {
-	s = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-
+	if ((s = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) < 0) {
+		throw std::string("Could not create socket: ") + std::string(strerror(errno));
+	}
 	bzero((char *)&localAddress, sizeof(localAddress));
 	localAddress.sin_family = AF_INET;
 	localAddress.sin_addr.s_addr = inet_addr(addr.c_str());
 	localAddress.sin_port = htons(iport);
-	bind(s, (struct sockaddr *)&localAddress, sizeof(localAddress));
+
+	int reuse = 1;
+	if (setsockopt(s, SOL_SOCKET, SO_REUSEADDR, (const char*)&reuse, sizeof(reuse)) < 0) {
+		throw std::string("Could not set reuse port");
+	}
+
+	if (addr != "0.0.0.0" || iport != 0) {
+		if (bind(s, (struct sockaddr *)&localAddress, sizeof(localAddress)) < 0) {
+			throw std::string("Could not bind: ") + std::string(strerror(errno));
+		}
+	}
 }
 
 DatagramSocket::~DatagramSocket() {

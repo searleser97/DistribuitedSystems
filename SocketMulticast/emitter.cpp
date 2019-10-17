@@ -8,9 +8,9 @@ int main() {
   int port, ttl;
   cin >> ipmulti >> port >> ttl >> str;
   MulticastSocket ms;
-  DatagramPacket packet(str, strlen(str), ipmulti, port);
+  DatagramPacket packet(str, strlen(str) + 1, ipmulti, port);
   ms.send(packet, ttl);
-  } catch (char const* msg) {
+  } catch (string msg) {
     cout << msg << endl;
   }
 }
