@@ -7,7 +7,7 @@ MulticastSocket::MulticastSocket() : DatagramSocket() {}
 
 MulticastSocket::MulticastSocket(uint16_t iport) : DatagramSocket(iport) {
   int reuse = 1;
-  if (setsockopt(s, SOL_SOCKET, SO_REUSEPORT, &reuse, sizeof(reuse) < 0))
+  if (setsockopt(s, SOL_SOCKET, SO_REUSEPORT, &reuse, sizeof(reuse)) < 0)
     throw "could not set reuse port";
 }
 

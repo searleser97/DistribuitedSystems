@@ -9,11 +9,11 @@ DatagramSocket.o: DatagramSocket.cpp
 MulticastSocket.o: MulticastSocket.cpp
 	g++ -c MulticastSocket.cpp -Wall
 
-emitter: DatagramPacket.o DatagramSocket.o MulticastSocket.o
-	g++ DatagramPacket.o DatagramSocket.o MulticastSocket.o emitter.cpp -o emitter
+emitter: DatagramPacket.o DatagramSocket.o MulticastSocket.o emitter.cpp
+	g++ DatagramPacket.o DatagramSocket.o MulticastSocket.o emitter.cpp -o emitter -g
 
-receiver: DatagramPacket.o DatagramSocket.o MulticastSocket.o
-	g++ DatagramPacket.o DatagramSocket.o MulticastSocket.o receiver.cpp -o receiver
+receiver: DatagramPacket.o DatagramSocket.o MulticastSocket.o receiver.cpp
+	g++ DatagramPacket.o DatagramSocket.o MulticastSocket.o receiver.cpp -o receiver -g
 
 .PHONY: clean
 
