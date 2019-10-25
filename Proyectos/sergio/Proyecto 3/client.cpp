@@ -24,7 +24,7 @@ void requestScreenShots(string serverIp, int port,
     try {
       ImagePacket *imgpack = (ImagePacket *)Request::doOperation(
           serverIp, port, Message::AllowedOperations::image,
-          (char *)new ImagePacket("", quality, nullptr, 0), sizeof(ImagePacket), len_reply);
+          (char *)new ImagePacket("aux", quality, nullptr, 0), sizeof(ImagePacket), len_reply);
       cout << "salioo" << endl;
       cout << len_reply << endl;
       cout << imgpack->name << endl;

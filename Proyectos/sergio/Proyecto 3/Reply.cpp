@@ -27,8 +27,6 @@ Message *Reply::getRequest() {
 void Reply::sendReply(const char *arguments, size_t len) {
   if (!history.count({address, requestId}))
     history[{address, requestId}] = {arguments, len};
-  ImagePacket* img = (ImagePacket*) arguments;
-  std::cout << img->name << std::endl;
   Message *msg = new Message();
   msg->type = Message::Type::reply;
   msg->operation = operation;

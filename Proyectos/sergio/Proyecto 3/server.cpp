@@ -69,10 +69,9 @@ int main(int argc, char *argv[]) {
       ImagePacket *imgpackIn = (ImagePacket *)msg->arguments;
       char *img = captureScreenShot("tmp/" + filename, imgpackIn->quality);
       size_t dataLen = getFileSize("tmp/" + filename);
-      ImagePacket *imgpackOut =
-          new ImagePacket(filename.c_str(), imgpackIn->quality, img, dataLen);
-      reply.sendReply((char *)imgpackOut, dataLen + sizeof(unsigned short) +
-      sizeof(char) * filename.size());
+      
+      ImagePacket *imgpackOut = new ImagePacket(filename.c_str(), imgpackIn->quality, img, dataLen);
+      reply.sendReply((char *)imgpackOut, dataLen + sizeof(unsigned short) + sizeof(char) * filename.size());
     }
     // cout << "\n";
   }

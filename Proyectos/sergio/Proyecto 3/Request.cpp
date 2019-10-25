@@ -30,9 +30,11 @@ char *Request::doOperation(const std::string addr, uint16_t iport,
       try {
         sock.send(pq);
         sock.receiveTimeout(pqresp, 3, 0);
-        std::cout << "msgToREceiveOffset: " << msgToReceive->length << std::endl;
+        std::cout << "msgToREceiveOffset: " << msgToReceive->length
+                  << std::endl;
         ans = (char *)realloc(ans, msgToSend->offset + msgToReceive->length);
-        memcpy(ans + msgToSend->offset, msgToReceive->arguments, msgToReceive->length);
+        memcpy(ans + msgToSend->offset, msgToReceive->arguments,
+               msgToReceive->length);
         msgToSend->offset += msgToReceive->length;
         std::cout << msgToSend->offset << std::endl;
         break;
@@ -46,7 +48,7 @@ char *Request::doOperation(const std::string addr, uint16_t iport,
     }
   }
   len_reply = msgToSend->offset;
-  ImagePacket* img = (ImagePacket*) ans;
+  ImagePacket *img = (ImagePacket *)ans;
   std::cout << img->quality << std::endl;
   std::cout << "Image Name:" << std::endl;
   std::cout << img->name << std::endl;
