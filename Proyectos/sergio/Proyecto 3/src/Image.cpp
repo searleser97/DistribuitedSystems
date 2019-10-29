@@ -6,7 +6,7 @@ Image::Image() {}
 using namespace std;
 Image::Image(const char *name, unsigned short quality, char *img,
                          size_t len)
-    : quality(quality) {
+    : quality(quality), len(len) {
   strcpy(this->name, name);
   if (len) {
     memcpy(bytes, img, len);

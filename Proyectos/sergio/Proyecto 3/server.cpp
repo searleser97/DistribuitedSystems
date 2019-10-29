@@ -13,6 +13,12 @@
 
 using namespace std;
 
+void saveFile(const string &path, char *bytes, unsigned size) {
+  ofstream file(path, ios::binary);
+  file.write(bytes, size);
+  file.close();
+}
+
 string genFileName(const string &ip, uint64_t requestId) {
   return ip + "_" + to_string(requestId) + ".png";
 }
@@ -42,12 +48,10 @@ char *captureScreenShot(const string &path, u_short quality) {
 }
 
 int main(int argc, char *argv[]) {
-  std::ifstream in("~/CLionProjects/ukras3/inServer");
-  std::cin.rdbuf(in.rdbuf());
   uint16_t puerto;
   cout << "Puerto en el que se va a escuchar: ";
   cin >> puerto;
-  puerto = 9000;
+  // puerto = 9000;
   Reply reply(puerto);
   cout << "Servidor iniciado...\n";
   unordered_map<string, int> nbd;
@@ -69,12 +73,30 @@ int main(int argc, char *argv[]) {
       reply.sendReply((char *)&nbd[reply.address], sizeof(int));
     } else if (msg->operation == Message::AllowedOperations::image) {
       string filename = genFileName(reply.address, reply.requestId);
-      int quality = *(int*) msg->arguments;
+      int quality = *(int *)msg->arguments;
       char *img = captureScreenShot("tmp/" + filename, quality);
       size_t dataLen = getFileSize("tmp/" + filename);
+      // Image *imgpackOut = new Image(filename.c_str(), quality, img, dataLen);
+      // *****************************************
+      ifstream file;
+      file.open("prueba.txt", ios::in | ios::binary | ios::ate);
+      char *myfile = nullptr;
+      if (file.is_open()) {
+        streampos size = file.tellg();
+        myfile = new char[size];
+        file.seekg(0, ios::beg);
+        file.read(myfile, size);
+        char *aux = new char[size];
+        file.close();
+      }
+      size_t myfilelen = getFileSize("prueba.txt");
+      cout << "F" << endl;
+      cout << myfilelen << endl;
+      Image *imgpackOut = new Image("prueba.txt", quality, myfile, myfilelen);
       
-      Image *imgpackOut = new Image(filename.c_str(), quality, img, dataLen);
-      reply.sendReply((char *)imgpackOut, sizeof(Image));
+      saveFile("pruebatest.txt", imgpackOut->bytes, sizeof(imgpackOut->bytes));
+
+      // reply.sendReply((char *)imgpackOut, sizeof(Image));
     }
     // cout << "\n";
   }

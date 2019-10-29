@@ -42,7 +42,6 @@ int main(int argc, char *argv[]) {
   string firstServerIp;
   uint16_t port;
   int serversCount, interval;
-  freopen("~/CLionProjects/ukras3/inClient","r",stdin);
   unsigned short quality;
   cout << "Ingrese el numero de servidores: ";
   cin >> serversCount;
@@ -56,11 +55,11 @@ int main(int argc, char *argv[]) {
           "panalla: ";
   cin >> interval;
   cout << endl;
-  serversCount = 1;
-  firstServerIp = "127.0.0.1";
-  port = 9000;
-  quality = 50;
-  interval = 10;
+  // serversCount = 1;
+  // firstServerIp = "127.0.0.1";
+  // port = 9000;
+  // quality = 50;
+  // interval = 10;
   int firstIp = ntohl(inet_addr(firstServerIp.c_str()));
   int lastIP = firstIp + serversCount - 1;
   vector<thread> requests;
