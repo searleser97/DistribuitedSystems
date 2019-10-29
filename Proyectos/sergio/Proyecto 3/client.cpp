@@ -1,6 +1,6 @@
-#include "ImagePacket.h"
-#include "Request.h"
-#include "Util.h"
+#include "include/Image.h"
+#include "include/Request.h"
+#include "include/Util.h"
 #include <arpa/inet.h>
 #include <chrono>
 #include <fstream>
@@ -8,30 +8,28 @@
 #include <string>
 #include <thread>
 #include <vector>
+#include <cstring>
 
 using namespace std;
 
-void saveFile(string path, char *bytes, unsigned size) {
+void saveFile(const string &path, char *bytes, unsigned size) {
   ofstream file(path, ios::binary);
   file.write(bytes, size);
   file.close();
 }
 
-void requestScreenShots(string serverIp, int port,
+void requestScreenShots(const string &serverIp, int port,
                                 unsigned short quality, unsigned int interval) {
   size_t len_reply;
   while (true) {
     try {
-      ImagePacket *imgpack = (ImagePacket *)Request::doOperation(
-          serverIp, port, Message::AllowedOperations::image,
-          (char *)new ImagePacket("aux", quality, nullptr, 0), sizeof(ImagePacket), len_reply);
-      cout << "salioo" << endl;
-      cout << len_reply << endl;
+      char q[sizeof(quality)];
+      memcpy(&q, &quality, sizeof(quality));
+      Image *imgpack = (Image *)Request::doOperation(
+          serverIp, port, Message::AllowedOperations::image, (char *)q, sizeof(quality), len_reply);
       cout << imgpack->name << endl;
-      cout << imgpack->quality << endl;
-      saveFile("ScreenShots/" + string(imgpack->name), imgpack->bytes,
-               len_reply - sizeof(char) * string(imgpack->name).size() -
-                   sizeof(unsigned short));
+      cout << imgpack->len << endl;
+      saveFile("ScreenShots/" + string(imgpack->name), imgpack->bytes, imgpack->len);
     } catch (const char *msg) {
       std::cerr << msg << endl;
     }
@@ -40,10 +38,11 @@ void requestScreenShots(string serverIp, int port,
 }
 
 int main(int argc, char *argv[]) {
-  ios_base::sync_with_stdio(0);
+  ios_base::sync_with_stdio(false);
   string firstServerIp;
   uint16_t port;
   int serversCount, interval;
+  freopen("~/CLionProjects/ukras3/inClient","r",stdin);
   unsigned short quality;
   cout << "Ingrese el numero de servidores: ";
   cin >> serversCount;
@@ -57,6 +56,11 @@ int main(int argc, char *argv[]) {
           "panalla: ";
   cin >> interval;
   cout << endl;
+  serversCount = 1;
+  firstServerIp = "127.0.0.1";
+  port = 9000;
+  quality = 50;
+  interval = 10;
   int firstIp = ntohl(inet_addr(firstServerIp.c_str()));
   int lastIP = firstIp + serversCount - 1;
   vector<thread> requests;
