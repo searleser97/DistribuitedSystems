@@ -3,10 +3,12 @@
 #include <string>
 class ImagePacket {
   public:
+    const static size_t MAX_SIZE = 1e6;
     ImagePacket();
     ImagePacket(const char * name, unsigned short quality, char * bytes, size_t len);
-    char * name;
+    char name[100];
     unsigned short quality;
-    char * bytes;
+    char bytes[MAX_SIZE];
+    size_t len;
 };
 #endif
