@@ -61,9 +61,9 @@ int DatagramSocket::receiveTimeout(DatagramPacket & p, time_t seconds, suseconds
 
 	if (n < 0) {
 		if (errno == EWOULDBLOCK)
-			throw "Timeout while receiving the packet";
+			throw std::string("Timeout while receiving the packet");
 		else
-			throw "Error while receiving the packet";
+			throw std::string("Error while receiving the packet");
 	}
 
 	p.setPort(ntohs(remoteAddress.sin_port));
