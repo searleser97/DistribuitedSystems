@@ -75,28 +75,9 @@ int main(int argc, char *argv[]) {
       string filename = genFileName(reply.address, reply.requestId);
       int quality = *(int *)msg->arguments;
       char *img = captureScreenShot("tmp/" + filename, quality);
-      size_t dataLen = getFileSize("tmp/" + filename);
-      // Image *imgpackOut = new Image(filename.c_str(), quality, img, dataLen);
-      // *****************************************
-      ifstream file;
-      file.open("prueba.txt", ios::in | ios::binary | ios::ate);
-      char *myfile = nullptr;
-      if (file.is_open()) {
-        streampos size = file.tellg();
-        myfile = new char[size];
-        file.seekg(0, ios::beg);
-        file.read(myfile, size);
-        char *aux = new char[size];
-        file.close();
-      }
-      size_t myfilelen = getFileSize("prueba.txt");
-      cout << "F" << endl;
-      cout << myfilelen << endl;
-      Image *imgpackOut = new Image("prueba.txt", quality, myfile, myfilelen);
-      
-      saveFile("pruebatest.txt", imgpackOut->bytes, sizeof(imgpackOut->bytes));
-
-      // reply.sendReply((char *)imgpackOut, sizeof(Image));
+      size_t imglen = getFileSize("tmp/" + filename);
+      Image *imgpackOut = new Image(filename.c_str(), quality, img, imglen);
+      reply.sendReply((char *)imgpackOut, sizeof(Image));
     }
     // cout << "\n";
   }
