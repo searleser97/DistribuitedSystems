@@ -16,6 +16,9 @@ public:
   int receive(DatagramPacket &p);
   int receiveTimeout(DatagramPacket &p, time_t seconds,
                      suseconds_t microseconds);
+  int sendReliable(DatagramPacket &p, uint8_t ttl, uint32_t n_receivers);
+  int receiveReliable(DatagramPacket &p, time_t seconds,
+                      suseconds_t microseconds);
 
 private:
   struct ip_mreq groupAddr;
