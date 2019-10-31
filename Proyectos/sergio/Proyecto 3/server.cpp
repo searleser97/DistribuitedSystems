@@ -79,7 +79,6 @@ int main(int argc, char *argv[]) {
       Image *imgpackOut = new Image(filename.c_str(), quality, img, imglen);
       reply.sendReply((char *)imgpackOut, sizeof(Image));
     }
-    // cout << "\n";
   }
   return 0;
 }

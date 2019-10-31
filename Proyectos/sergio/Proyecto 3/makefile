@@ -1,4 +1,4 @@
-all: client server
+all: client server web_server
 
 DatagramPacket.o: src/DatagramPacket.cpp
 	g++ -c src/DatagramPacket.cpp -Wall
@@ -26,6 +26,12 @@ client: Util.o Image.o ImagePacket.o DatagramPacket.o DatagramSocket.o Request.o
 
 server: Util.o Image.o ImagePacket.o DatagramPacket.o DatagramSocket.o Request.o Reply.o
 	g++ Util.o Image.o ImagePacket.o DatagramPacket.o DatagramSocket.o Request.o Reply.o server.cpp -o server -lpthread
+
+mongoose.o: mongoose.c
+	g++ -c mongoose.c -Wall
+
+web_server: mongoose.o
+	g++ mongoose.o web_server.cpp
 
 .PHONY: clean
 

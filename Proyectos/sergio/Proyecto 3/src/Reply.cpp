@@ -2,8 +2,6 @@
 #include <iostream>
 #include <string.h>
 
-#include "../include/Image.h"
-
 Reply::Reply(int iport) { localSocket = new DatagramSocket(iport); }
 
 Message *Reply::getRequest() {
@@ -17,7 +15,6 @@ Message *Reply::getRequest() {
   requestId = msg->requestId;
   if (history.count({address, requestId})) {
     auto saved = history[{address, requestId}];
-    std::cout << msg->offset << "/" << saved.second << std::endl;
     sendReply(saved.first + msg->offset, saved.second - msg->offset);
     return getRequest();
   }

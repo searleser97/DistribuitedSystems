@@ -27,8 +27,6 @@ void requestScreenShots(const string &serverIp, int port,
       memcpy(&q, &quality, sizeof(quality));
       Image *imgpack = (Image *)Request::doOperation(
           serverIp, port, Message::AllowedOperations::image, (char *)q, sizeof(quality), len_reply);
-      cout << imgpack->name << endl;
-      cout << imgpack->len << endl;
       saveFile("ScreenShots/" + string(imgpack->name), imgpack->bytes, imgpack->len);
     } catch (const char *msg) {
       std::cerr << msg << endl;
