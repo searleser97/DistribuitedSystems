@@ -1,28 +1,31 @@
 all: client server
 
-DatagramPacket.o: DatagramPacket.cpp
-	g++ -c DatagramPacket.cpp -Wall
+DatagramPacket.o: src/DatagramPacket.cpp
+	g++ -c src/DatagramPacket.cpp -Wall
 
-DatagramSocket.o: DatagramSocket.cpp
-	g++ -c DatagramSocket.cpp -Wall
+DatagramSocket.o: src/DatagramSocket.cpp
+	g++ -c src/DatagramSocket.cpp -Wall
 
-Request.o: Request.cpp
-	g++ -c Request.cpp -Wall
+Request.o: src/Request.cpp
+	g++ -c src/Request.cpp -Wall
 
-Reply.o: Reply.cpp
-	g++ -c Reply.cpp -Wall
+Reply.o: src/Reply.cpp
+	g++ -c src/Reply.cpp -Wall
 
-Util.o: Util.cpp
-	g++ -c Util.cpp -Wall
+Util.o: src/Util.cpp
+	g++ -c src/Util.cpp -Wall
 
-ImagePacket.o: ImagePacket.cpp
-	g++ -c ImagePacket.cpp -Wall
+ImagePacket.o: src/ImagePacket.cpp
+	g++ -c src/ImagePacket.cpp -Wall
 
-client: Util.o ImagePacket.o DatagramPacket.o DatagramSocket.o Request.o Reply.o
-	g++ Util.o ImagePacket.o DatagramPacket.o DatagramSocket.o Request.o Reply.o client.cpp -o client -lpthread
+Image.o: src/Image.cpp
+	g++ -c src/Image.cpp -Wall
 
-server: Util.o ImagePacket.o DatagramPacket.o DatagramSocket.o Request.o Reply.o
-	g++ Util.o ImagePacket.o DatagramPacket.o DatagramSocket.o Request.o Reply.o server.cpp -o server -lpthread
+client: Util.o Image.o ImagePacket.o DatagramPacket.o DatagramSocket.o Request.o Reply.o
+	g++ Util.o Image.o ImagePacket.o DatagramPacket.o DatagramSocket.o Request.o Reply.o client.cpp -o client -lpthread
+
+server: Util.o Image.o ImagePacket.o DatagramPacket.o DatagramSocket.o Request.o Reply.o
+	g++ Util.o Image.o ImagePacket.o DatagramPacket.o DatagramSocket.o Request.o Reply.o server.cpp -o server -lpthread
 
 .PHONY: clean
 
