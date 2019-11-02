@@ -6,12 +6,22 @@ using namespace std;
 
 vector<string> getFileList(string path) {
   vector<string> fileNames;
-  for (const auto &entry : filesystem::directory_iterator(path))
+  for (const auto &entry : filesystem::directory_iterator(path)) {
     fileNames.push_back(entry.path().generic_string().substr(2));
+  }
   return fileNames;
 }
 
-vector<string> getScreenshots() { return getFileList("./ScreenShots"); }
+vector<string> getScreenshots() {
+  auto images = getFileList("./ScreenShots");
+  vector<string> ans;
+  for (auto &img : images) {
+    if (img.back() == 'g') {
+      ans.push_back(img);
+    }
+  }
+  return ans;
+}
 
 static const char *s_http_port = "8000";
 static struct mg_serve_http_opts s_http_server_opts;
@@ -27,19 +37,19 @@ static void ev_handler(struct mg_connection *connection, int event_id,
     uri.assign(http->uri.p, http->uri.len);
     if (uri == "/getScreenShots") {
       vector<string> screenshots = getScreenshots();
-      string response = "{\n    screenshots: [\n";
+      string response = "{\n    \"screenshots\": [\n";
       for (int i = 0; i < screenshots.size(); i++) {
         if (i)
           response += ",\n";
         for (int i = 0; i < 8; i++)
           response += " ";
-        response += screenshots[i];
+        response += "\"" + screenshots[i] + "\"";
       }
-      response += "\n";
-      for (int i = 0; i < 4; i++) response += " ";
-      response += "]\n}";
+      response += "\n    ]\n}";
       cout << response << endl;
-      mg_printf(connection, "%s", "HTTP/1.1 200 OK\r\nTransfer-Encoding: chunked\r\n\r\n");
+      mg_printf(connection, "%s",
+                "HTTP/1.1 200 OK\r\nContent-Type: "
+                "application/json\r\nTransfer-Encoding: chunked\r\n\r\n");
       mg_printf_http_chunk(connection, response.c_str());
       mg_send_http_chunk(connection, "", 0);
     } else {
@@ -62,7 +72,7 @@ int main() {
 
   // Set up HTTP server parameters
   mg_set_protocol_http_websocket(nc);
-  s_http_server_opts.document_root = "ScreenShots"; // Serve directory
+  s_http_server_opts.document_root = "."; // Serve directory
   s_http_server_opts.enable_directory_listing = "yes";
   while (true) {
     mg_mgr_poll(&mgr, 1000);
