@@ -13,7 +13,7 @@ int main() {
     ms.joinGroup(0, ipmulti);
     while (true) {
       DatagramPacket packet((char *) &monto, sizeof(monto));
-      ms.receiveTimeout(packet, 3, 0);
+      ms.receiveReliable(packet, 3600, 0);
       nbd[packet.getAddress()] += monto;
       cout << packet.getAddress() << ":" << packet.getPort();
       cout << "monto recibido: " << monto << endl;
