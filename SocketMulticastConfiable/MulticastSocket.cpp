@@ -47,9 +47,7 @@ int MulticastSocket::receiveReliable(DatagramPacket &p, time_t seconds,
     auto ans = DatagramSocket::receiveTimeout(p, seconds, microseconds);
 		return ans;
   } catch (std::string msg) {
-		char ack = 0;
-		auto dp = DatagramPacket(&ack, sizeof(char));
-		DatagramSocket::send(dp);
+		throw msg;
 	}
 
 }
@@ -58,7 +56,7 @@ int MulticastSocket::sendReliable(DatagramPacket &p, uint8_t ttl,
                                   uint32_t n_receivers) {
   setsockopt(s, IPPROTO_IP, IP_MULTICAST_TTL, (void *)&ttl, sizeof(ttl));
   auto ans = DatagramSocket::send(p);
-  for (int i = 0; i < n_receivers; i++) {
+  for (uint32_t i = 0; i < n_receivers; i++) {
     DatagramPacket dp(new char[1], 1);
     try {
       DatagramSocket::receiveTimeout(dp, 3, 0);
