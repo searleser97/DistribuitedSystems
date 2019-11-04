@@ -45,11 +45,13 @@ int MulticastSocket::receiveReliable(DatagramPacket &p, time_t seconds,
                                      suseconds_t microseconds) {
   try {
     auto ans = DatagramSocket::receiveTimeout(p, seconds, microseconds);
-		return ans;
+    char res = 1;
+    DatagramPacket dp(&res, 1, p.getAddress(), p.getPort());
+    DatagramSocket::send(dp);
+    return ans;
   } catch (std::string msg) {
-		throw msg;
-	}
-
+    throw msg;
+  }
 }
 
 int MulticastSocket::sendReliable(DatagramPacket &p, uint8_t ttl,
@@ -64,7 +66,7 @@ int MulticastSocket::sendReliable(DatagramPacket &p, uint8_t ttl,
         throw std::string("Negative ack received");
       }
     } catch (std::string msg) {
-      throw std::string("Did not receive ack");
+      throw std::string("Did not receive ack: ") + msg;
     }
   }
   return ans;

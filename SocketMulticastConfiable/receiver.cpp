@@ -15,7 +15,7 @@ int main() {
       DatagramPacket packet((char *) &monto, sizeof(monto));
       ms.receiveReliable(packet, 3600, 0);
       nbd[packet.getAddress()] += monto;
-      cout << packet.getAddress() << ":" << packet.getPort();
+      cout << packet.getAddress() << ":" << packet.getPort() << endl;
       cout << "monto recibido: " << monto << endl;
       cout << "monto acumulado: " << nbd[packet.getAddress()] << endl;
     }
