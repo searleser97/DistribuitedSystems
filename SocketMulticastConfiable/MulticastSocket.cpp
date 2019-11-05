@@ -62,9 +62,6 @@ int MulticastSocket::sendReliable(DatagramPacket &p, uint8_t ttl,
     DatagramPacket dp(new char[1], 1);
     try {
       DatagramSocket::receiveTimeout(dp, 3, 0);
-      if (!dp.getData()[0]) {
-        throw std::string("Negative ack received");
-      }
     } catch (std::string msg) {
       throw std::string("Did not receive ack: ") + msg;
     }
