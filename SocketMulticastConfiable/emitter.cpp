@@ -10,7 +10,7 @@ int random(int min, int max) { // [min, max]
 int main() {
   string ipmulti;
   int cant_depositos;
-  int datos[2];
+  uint64_t datos[2];
   int port, ttl;
   cin >> ipmulti >> port >> ttl >> cant_depositos;
   MulticastSocket ms;
