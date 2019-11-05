@@ -46,10 +46,11 @@ static void ev_handler(struct mg_connection *connection, int event_id,
         response += "\"" + screenshots[i] + "\"";
       }
       response += "\n    ]\n}";
-      cout << response << endl;
       mg_printf(connection, "%s",
-                "HTTP/1.1 200 OK\r\nContent-Type: "
-                "application/json\r\nTransfer-Encoding: chunked\r\n\r\n");
+                "HTTP/1.1 200 OK\r\n"
+                "Access-Control-Allow-Origin: *\r\n"
+                "Content-Type: application/json\r\n"
+                "Transfer-Encoding: chunked\r\n\r\n");
       mg_printf_http_chunk(connection, response.c_str());
       mg_send_http_chunk(connection, "", 0);
     } else {
