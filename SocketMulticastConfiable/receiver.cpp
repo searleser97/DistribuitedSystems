@@ -3,7 +3,7 @@ using namespace std;
 #include "MulticastSocket.h"
 int main() {
   map<string, int> nbd;
-  set<pair<string, int>> visited;
+  set<pair<string, uint64_t>> visited;
   string ipmulti;
   uint64_t datos[2];
   int port, ttl;
