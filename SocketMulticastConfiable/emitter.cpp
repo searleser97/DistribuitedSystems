@@ -10,16 +10,21 @@ int random(int min, int max) { // [min, max]
 int main() {
   string ipmulti;
   int cant_depositos;
+  uint64_t datos[2];
   int port, ttl;
   cin >> ipmulti >> port >> ttl >> cant_depositos;
   MulticastSocket ms;
   for (int i = 0; i < cant_depositos; i++) {
     try {
-      int ac = random(1, 9);
-      DatagramPacket packet((char *)&ac, sizeof(ac), ipmulti, port);
+      int cantidad = random(1, 9);
+      datos[0] = (((uint64_t)random(0, numeric_limits<int>::max())) << 32) | ((uint64_t)time(0));
+      datos[1] = cantidad;
+      DatagramPacket packet((char *)datos, sizeof(datos), ipmulti, port);
       ms.sendReliable(packet, ttl, 3);
     } catch (string msg) {
       std::cerr << msg << endl;
+      exit(0);
     }
   }
+  return 0;
 }
