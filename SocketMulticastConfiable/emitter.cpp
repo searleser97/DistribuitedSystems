@@ -17,7 +17,7 @@ int main() {
   for (int i = 0; i < cant_depositos; i++) {
     try {
       int cantidad = random(1, 9);
-      datos[0] = random(0, numeric_limits<int>::max());
+      datos[0] = (((uint64_t)random(0, numeric_limits<int>::max())) << 32) | ((uint64_t)time(0));
       datos[1] = cantidad;
       DatagramPacket packet((char *)datos, sizeof(datos), ipmulti, port);
       ms.sendReliable(packet, ttl, 3);
