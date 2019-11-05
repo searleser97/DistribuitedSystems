@@ -10,7 +10,6 @@ int random(int min, int max) { // [min, max]
 int main() {
   string ipmulti;
   int cant_depositos;
-  int id_deposito = 0;
   int datos[2];
   int port, ttl;
   cin >> ipmulti >> port >> ttl >> cant_depositos;
@@ -18,7 +17,7 @@ int main() {
   for (int i = 0; i < cant_depositos; i++) {
     try {
       int cantidad = random(1, 9);
-      datos[0] = id_deposito++;
+      datos[0] = random(0, numeric_limits<int>::max());
       datos[1] = cantidad;
       DatagramPacket packet((char *)datos, sizeof(datos), ipmulti, port);
       ms.sendReliable(packet, ttl, 3);
