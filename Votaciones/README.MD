@@ -1,0 +1,11 @@
+# Ejercicio 1
+- 2,269.745 MB
+- Si (Disco Duro)
+- Si (USB)
+- Si (RAM)
+
+# Ejercicio 2
+- ./gen 7000 out  0.02s user 0.01s system 93% cpu 0.023 total
+- ./gen 70000 out  0.09s user 0.01s system 98% cpu 0.105 total
+- ./gen 700000 out  0.72s user 0.06s system 94% cpu 0.821 total
+- ./gen 7000000 out  6.59s user 0.28s system 94% cpu 7.280 total
