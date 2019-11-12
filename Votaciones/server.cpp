@@ -45,7 +45,7 @@ int main(int argc, char *argv[]) {
 	registro reg;
 	
 	f = fopen(argv[1], "rb+");
-	fopen((string(argv[1])+"Time").c_str(), "ab+");
+	fileTimes = fopen((string(argv[1])+"Time").c_str(), "ab+");
 	
 	if (f) {
 		while(fscanf(f, "%10s%18s%3s", reg.celular, reg.CURP, reg.partido) != EOF) {
@@ -77,6 +77,7 @@ int main(int argc, char *argv[]) {
 				fflush(f);
 				res = 1;
 				fprintf(fileTimes, "%d:%d", tv.tv_sec, tv.tv_usec);
+				fflush(fileTimes);
 			}
 			reply.sendReply((char*)&tv, sizeof(tv));
 		}
