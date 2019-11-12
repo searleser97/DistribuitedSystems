@@ -23,12 +23,19 @@ struct registro {
 set<tuple<string, string, string>> nbd;
 
 FILE* f;
+FILE *fileTimes;
 
 void isr(int sig){
 	if(sig == SIGINT && f){
 		fclose(f);
-		printf("Servidor cerrado.\n");
+	}
+	if(sig == SIGINT && fileTimes){
+		fclose(fileTimes);
+		
+	}
+	if(sig == SIGINT) {
 		exit(0);
+		printf("Servidor cerrado.\n");
 	}
 }
 
@@ -38,6 +45,8 @@ int main(int argc, char *argv[]) {
 	registro reg;
 	
 	f = fopen(argv[1], "rb+");
+	fopen((string(argv[1])+"Time").c_str(), "ab+");
+	
 	if (f) {
 		while(fscanf(f, "%10s%18s%3s", reg.celular, reg.CURP, reg.partido) != EOF) {
 			nbd.insert({reg.celular, reg.CURP, reg.partido});
@@ -67,6 +76,7 @@ int main(int argc, char *argv[]) {
 				fprintf(f, "%s%s%s\n", reg.celular, reg.CURP, reg.partido);
 				fflush(f);
 				res = 1;
+				fprintf(fileTimes, "%d:%d", tv.tv_sec, tv.tv_usec);
 			}
 			reply.sendReply((char*)&tv, sizeof(tv));
 		}
