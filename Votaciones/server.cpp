@@ -76,7 +76,7 @@ int main(int argc, char *argv[]) {
 				fprintf(f, "%s%s%s\n", reg.celular, reg.CURP, reg.partido);
 				fflush(f);
 				res = 1;
-				fprintf(fileTimes, "%d:%d", tv.tv_sec, tv.tv_usec);
+				fprintf(fileTimes, "%d:%d\n", tv.tv_sec, tv.tv_usec);
 				fflush(fileTimes);
 			}
 			reply.sendReply((char*)&tv, sizeof(tv));
