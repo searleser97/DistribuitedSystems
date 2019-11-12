@@ -26,25 +26,30 @@ void isr(int sig){
 
 int main(int argc, char *argv[]) {
 	signal(SIGINT, isr);
-	f = fopen(argv[1], "rb+");
+
 	registro reg;
-	while(fscanf(f, "%10s%18s%3s", reg.celular, reg.CURP, reg.partido) != EOF){
-		nbd.insert({reg.celular, reg.CURP, reg.partido});
+	
+	f = fopen(argv[1], "rb+");
+	if (f) {
+		while(fscanf(f, "%10s%18s%3s", reg.celular, reg.CURP, reg.partido) != EOF){
+			nbd.insert({reg.celular, reg.CURP, reg.partido});
+		}
+		fclose(f);
 	}
-	fclose(f);
+
 	f = fopen(argv[1], "ab+");
-  uint16_t puerto;
-  cout << "Puerto en el que se va a escuchar: ";
-  cin >> puerto;
-  Reply reply(puerto);
-  cout << "Servidor iniciado...\n";
-  while (1) {
+	uint16_t puerto;
+	cout << "Puerto en el que se va a escuchar: ";
+	cin >> puerto;
+	Reply reply(puerto);
+	cout << "Servidor iniciado...\n";
+
+	while (1) {
 		char res = 0;
-    Message *msg = reply.getRequest();
-    reg = *(registro*)msg->arguments;
-    if (msg->operationId == Message::allowedOperations::registerVote) {
-      // cout << " Numeros a sumar: " << nums[0] << " y " << nums[1] << "\n";
-      tuple<string, string, string> t(reg.celular, reg.CURP, reg.partido);
+		Message *msg = reply.getRequest();
+		reg = *(registro*)msg->arguments;
+		if (msg->operationId == Message::allowedOperations::registerVote) {
+			tuple<string, string, string> t(reg.celular, reg.CURP, reg.partido);
 			if(nbd.find(t) == nbd.end()){
 				nbd.insert(t);
 				fprintf(f, "%s%s%s\n", reg.celular, reg.CURP, reg.partido);
@@ -52,8 +57,7 @@ int main(int argc, char *argv[]) {
 				res = 1;
 			}
 			reply.sendReply(&res, sizeof(res));
-    }
-    // cout << "\n";
-  }
-  return 0;
+		}
+	}
+	return 0;
 }
