@@ -37,7 +37,7 @@ int main(int argc, char *argv[]) {
 	while (n-- && fscanf(f, "%10s%18s%3s", reg.celular, reg.CURP, reg.partido) != EOF) {
 		try {
 			tv = *(TimeVal*)r.doOperation(ip, puerto, Message::allowedOperations::registerVote, (char *)&reg, sizeof(reg), len_reply);
-			// cout <<"ss:ms "<< tv.tv_sec << ":" << tv.tv_usec << '\n';
+			//cout <<"ss:ms "<< tv.tv_sec << ":" << tv.tv_usec << '\n';
 			/*if (res) {
 				cout << "Voto registrado correctamente\n";
 			} else {
