@@ -18,11 +18,8 @@ gen: gen.cpp
 client2: DatagramPacket.o DatagramSocket.o Request.o Reply.o client2.cpp
 	g++ DatagramPacket.o DatagramSocket.o Request.o Reply.o client2.cpp -o client2
 
-trie.o: Trie.h
-	g++ -c Trie.h -Wall
-
-server: DatagramPacket.o DatagramSocket.o Request.o Reply.o trie.o server.cpp
-	g++ DatagramPacket.o DatagramSocket.o Request.o Reply.o trie.o server.cpp -o server
+server: DatagramPacket.o DatagramSocket.o Request.o Reply.o server.cpp
+	g++ DatagramPacket.o DatagramSocket.o Request.o Reply.o server.cpp -o server
 
 .PHONY: clean
 
