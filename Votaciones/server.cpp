@@ -21,7 +21,7 @@ struct registro {
   char partido[4];
 };
 
-Trie trie;
+set<tuple<string, string, string>> trie;
 
 FILE* f;
 FILE *fileTimes;
@@ -49,7 +49,7 @@ int main(int argc, char *argv[]) {
 	
 	if (f) {
 		while(fscanf(f, "%10s%18s%3s", reg.celular, reg.CURP, reg.partido) != EOF) {
-			trie.insert(string(reg.celular) + string(reg.CURP) + string(reg.partido));
+			trie.insert({string(reg.celular), string(reg.CURP), string(reg.partido)});
 		}
 		fclose(f);
 	}
@@ -68,8 +68,8 @@ int main(int argc, char *argv[]) {
 		tv.tv_sec = 0;
 		tv.tv_usec = 0;
 		if (msg->operationId == Message::allowedOperations::registerVote) {
-			string id = string(reg.celular) + string(reg.CURP) + string(reg.partido);
-			if (trie.strCount(id)) {
+			tuple<string, string, string> id = {string(reg.celular), string(reg.CURP), string(reg.partido)};
+			if (!trie.count(id)) {
 				gettimeofday(&tv, NULL);//get time
 				trie.insert(id);
 				fprintf(f, "%s%s%s\n", reg.celular, reg.CURP, reg.partido);
