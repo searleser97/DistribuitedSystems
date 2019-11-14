@@ -22,6 +22,7 @@ struct registro {
 };
 
 Trie trie;
+set <string> nbd;
 
 FILE* f;
 FILE *fileTimes;
@@ -69,7 +70,7 @@ int main(int argc, char *argv[]) {
 		tv.tv_usec = 0;
 		if (msg->operationId == Message::allowedOperations::registerVote) {
 			string id = string(reg.celular) + string(reg.CURP) + string(reg.partido);
-			if (trie.strCount(id)) {
+			if (!trie.strCount(id)) {
 				gettimeofday(&tv, NULL);//get time
 				trie.insert(id);
 				fprintf(f, "%s%s%s\n", reg.celular, reg.CURP, reg.partido);
