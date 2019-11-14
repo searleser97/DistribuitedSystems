@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include <bits/stdc++.h>
 #include <sys/time.h>
+#include "Trie.h"
 
 // struct timeval {
 // 	time_t tv_sec; /* segundos */
@@ -20,7 +21,7 @@ struct registro {
   char partido[4];
 };
 
-set<tuple<string, string, string>> nbd;
+Trie trie;
 
 FILE* f;
 FILE *fileTimes;
@@ -48,7 +49,7 @@ int main(int argc, char *argv[]) {
 	
 	if (f) {
 		while(fscanf(f, "%10s%18s%3s", reg.celular, reg.CURP, reg.partido) != EOF) {
-			nbd.insert({reg.celular, reg.CURP, reg.partido});
+			trie.insert(string(reg.celular) + string(reg.CURP) + string(reg.partido));
 		}
 		fclose(f);
 	}
@@ -67,11 +68,10 @@ int main(int argc, char *argv[]) {
 		tv.tv_sec = 0;
 		tv.tv_usec = 0;
 		if (msg->operationId == Message::allowedOperations::registerVote) {
-			
-			tuple<string, string, string> t(reg.celular, reg.CURP, reg.partido);
-			if(nbd.find(t) == nbd.end()){
+			string id = string(reg.celular) + string(reg.CURP) + string(reg.partido);
+			if (trie.strCount(id)) {
 				gettimeofday(&tv, NULL);//get time
-				nbd.insert(t);
+				trie.insert(id);
 				fprintf(f, "%s%s%s\n", reg.celular, reg.CURP, reg.partido);
 				fflush(f);
 				res = 1;

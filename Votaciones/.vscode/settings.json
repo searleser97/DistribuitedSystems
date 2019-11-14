@@ -1,5 +1,7 @@
 {
   "files.associations": {
-    "vector": "cpp"
+    "vector": "cpp",
+    "*.tcc": "cpp",
+    "string": "cpp"
   }
 }
