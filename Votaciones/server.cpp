@@ -50,7 +50,7 @@ int main(int argc, char *argv[]) {
 	
 	if (f) {
 		while(fscanf(f, "%10s%18s%3s", reg.celular, reg.CURP, reg.partido) != EOF) {
-			trie.insert({string(reg.celular), string(reg.CURP), string(reg.partido)});
+			trie.insert(string(reg.celular)+ string(reg.CURP)+ string(reg.partido));
 		}
 		fclose(f);
 	}
