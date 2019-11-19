@@ -39,7 +39,11 @@ void enviarVoto(const string & ip, uint16_t puerto, registro *reg) {
 
 void handler(const string & ip, uint16_t puerto, int pos){
 	for(int i = 0; i < registros[pos].size(); ++i){
-		enviarVoto(ip, puerto, &registros[pos][i]);
+    try {
+  		enviarVoto(ip, puerto, &registros[pos][i]);
+    } catch(const char *msg){
+      cerr << msg << "\n";
+    }
 	}
 }
 

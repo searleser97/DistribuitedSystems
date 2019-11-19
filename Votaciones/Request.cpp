@@ -29,7 +29,7 @@ char* Request::doOperation(const std::string addr, uint16_t iport, Message::allo
 		try {
 			sock.send(pq);
 			sock.receiveTimeout(pqresp, 3, 0);
-			if (msg2->requestId != msg->requestId) continue;
+			//if (msg2->requestId != msg->requestId) continue;
 			break;
 		} catch(const char* msg) {
 			std::cerr << msg << '\n';
