@@ -22,9 +22,9 @@ struct registro {
 };
 
 Request r;
-
+const int num_servers = 2;
 vector<thread> ths;
-vector<registro> registros[3];
+vector<registro> registros[num_servers];
 
 void enviarVoto(const string & ip, uint16_t puerto, registro *reg) {
 	size_t len_reply;
@@ -44,10 +44,10 @@ void handler(const string & ip, uint16_t puerto, int pos){
 }
 
 int main(int argc, char *argv[]) {
-  string ip[3];
+  string ip[num_servers];
   uint16_t puerto;
   cout << "Direcciones IPs de los servidores: ";
-  for (int i = 0; i < 3; i++) cin >> ip[i];
+  for (int i = 0; i < num_servers; i++) cin >> ip[i];
   cout << "Puerto de los servidores: ";
   cin >> puerto;
   int n = atoi(argv[1]);
@@ -56,15 +56,15 @@ int main(int argc, char *argv[]) {
     while (n-- &&
          fscanf(f, "%10s%18s%3s", reg.celular, reg.CURP, reg.partido) != EOF) {
 					 int last = reg.celular[9] - '0';
-					 registros[last/3].push_back(reg);
+					 registros[last/num_servers].push_back(reg);
   }
   fclose(f);
 
-	for(int i = 0; i < 3; ++i){
+	for(int i = 0; i < num_servers; ++i){
 		ths.emplace_back(handler, ip[i], puerto, i);
 	}
 
-	for(int i = 0; i < 3; ++i){
+	for(int i = 0; i < num_servers; ++i){
 		ths[i].join();
 	}
 
