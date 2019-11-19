@@ -31,7 +31,7 @@ void enviarVoto(const string & ip, uint16_t puerto, registro *reg) {
   try {
     TimeVal tv = *(TimeVal *)r.doOperation(ip, puerto,
                                    Message::allowedOperations::registerVote,
-                                   (char *)&reg, sizeof(reg), len_reply);
+                                   (char *)reg, sizeof(registro), len_reply);
   } catch (const char *msg) {
     throw msg;
   }
@@ -56,7 +56,7 @@ int main(int argc, char *argv[]) {
     while (n-- &&
          fscanf(f, "%10s%18s%3s", reg.celular, reg.CURP, reg.partido) != EOF) {
 					 int last = reg.celular[9] - '0';
-					 registros[last/num_servers].push_back(reg);
+					 registros[last%num_servers].push_back(reg);
   }
   fclose(f);
 
