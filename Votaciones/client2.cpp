@@ -16,39 +16,57 @@ typedef struct timeval TimeVal;
 using namespace std;
 
 struct registro {
-	char celular[11];
-	char CURP[19];
-	char partido[4];
+  char celular[11];
+  char CURP[19];
+  char partido[4];
 };
 
-int main(int argc, char *argv[]) {
-	string ip;
-	uint16_t puerto;
-	cout << "Direccion IP del servidor: ";
-	cin >> ip;
-	cout << "Puerto del servidor: ";
-	cin >> puerto;
-	Request r;
-	size_t len_reply;
-	int n = atoi(argv[1]);
-	FILE *f = fopen(argv[2], "rb");
-	registro reg;
-	TimeVal tv;
-	while (n-- && fscanf(f, "%10s%18s%3s", reg.celular, reg.CURP, reg.partido) != EOF) {
-		try {
-			tv = *(TimeVal*)r.doOperation(ip, puerto, Message::allowedOperations::registerVote, (char *)&reg, sizeof(reg), len_reply);
-			//cout <<"ss:ms "<< tv.tv_sec << ":" << tv.tv_usec << '\n';
-			/*if (res) {
-				cout << "Voto registrado correctamente\n";
-			} else {
-				cout << "Ya votaste prro :v\n";
-			}*/
+Request r;
 
-		} catch (const char *msg) {
-			std::cerr << msg << endl;
-			return -1;
-		}
+vector<thread> ths;
+vector<registro> registros[3];
+
+void enviarVoto(const string & ip, uint16_t puerto, registro *reg) {
+	size_t len_reply;
+  try {
+    TimeVal tv = *(TimeVal *)r.doOperation(ip, puerto,
+                                   Message::allowedOperations::registerVote,
+                                   (char *)&reg, sizeof(reg), len_reply);
+  } catch (const char *msg) {
+    throw msg;
+  }
+}
+
+void handler(const string & ip, uint16_t puerto, int pos){
+	for(int i = 0; i < registros[pos].size(); ++i){
+		enviarVoto(ip, puerto, &registros[pos][i]);
 	}
-	fclose(f);
-	return 0;
+}
+
+int main(int argc, char *argv[]) {
+  string ip[3];
+  uint16_t puerto;
+  cout << "Direcciones IPs de los servidores: ";
+  for (int i = 0; i < 3; i++) cin >> ip[i];
+  cout << "Puerto de los servidores: ";
+  cin >> puerto;
+  int n = atoi(argv[1]);
+  FILE *f = fopen(argv[2], "rb");
+  registro reg;
+    while (n-- &&
+         fscanf(f, "%10s%18s%3s", reg.celular, reg.CURP, reg.partido) != EOF) {
+					 int last = reg.celular[9] - '0';
+					 registros[last/3].push_back(reg);
+  }
+  fclose(f);
+
+	for(int i = 0; i < 3; ++i){
+		ths.emplace_back(handler, ip[i], puerto, i);
+	}
+
+	for(int i = 0; i < 3; ++i){
+		ths[i].join();
+	}
+
+  return 0;
 }

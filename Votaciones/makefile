@@ -17,7 +17,7 @@ gen: gen.cpp
 	g++ gen.cpp -O2 -o gen -Wall
 
 client2: DatagramPacket.o DatagramSocket.o Request.o Reply.o client2.cpp
-	g++ DatagramPacket.o DatagramSocket.o Request.o Reply.o client2.cpp -o client2
+	g++ DatagramPacket.o DatagramSocket.o Request.o Reply.o client2.cpp -o client2 -lpthread
 
 server: DatagramPacket.o DatagramSocket.o Request.o Reply.o Trie.o server.cpp
 	g++ DatagramPacket.o DatagramSocket.o Request.o Reply.o server.cpp -o server Trie.o
