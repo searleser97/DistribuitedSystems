@@ -1,0 +1,29 @@
+¿En qué consiste la replicación pasiva?
+A. En cada instante existe un único gestor de réplicas primario y uno o más gestores de réplicas secundarios.
+B. En cada instante existen varios gestores de réplicas primarios y un solo gestor secundario.
+C. En cada instante solo existen varios gestores de réplicas primarios.
+D. En cada instante existe un único gestor de réplicas primario.
+
+En el modelo de replicación pasiva, ¿qué pasos se llevan a cabo cuando un cliente solicita que se realice una operación?
+A. Petición, coordinación, ejecución, acuerdo y respuesta.
+B. Petición, reconocimiento, ejecución, validación y respuesta.
+C. Petición, ejecución, coordicación, validación y respuesta.
+D. Petición, coordinación, ejecución, reconocimiento y respuesta.
+
+¿En qué consiste la replicación activa?
+A. Los gestores de réplicas son máquinas de estado que desempeñan papeles equivalentes y se organizan como un grupo.
+B. Los gestores de réplicas son máquinas de estado que desempeñan papeles heterogéneos y se organizan como un grupo.
+C. Los gestores de réplicas son máquinas de estado que procesan peticiones de forma conjunta.
+D. Los gestores de réplicas son máquinas de estado que procesan peticiones de forma diferente pero consistente.
+
+¿Qué es un sistema linealizable?
+A. Uno en donde las operaciones son síncronas y los clientes aguardan a que se complete una operación antes de solicitar la siguiente.
+B. Uno en donde las operaciones son asíncronas y los clientes pueden hacer varias operaciones a la vez sin esperar sus resultados.
+C. Uno en donde las operaciones son síncronas y los clientes pueden hacer varias operaciones a la vez sin esperar sus resultados.
+D. Uno en donde las operaciones son asíncronas y los clientes aguardan a que se complete una operación antes de solicitar la siguiente.
+
+¿Cómo se puede considerar correcto a un servicio que esté basado en la replicación?
+A. Si es capaz de responder a pesar de los fallos y si los clientes no pueden percibir de qué servidor de réplicas provienen los datos.
+B. Si es capaz de realizar transacciones, leer y actualizar los datos.
+C. Si es capaz de responder a pesar de los fallos y si los clientes pueden percibir de qué servidor de réplicas provienen los datos.
+D. Si es capaz de responder a pesar de no contar con la suficiente información sobre la solicitud.

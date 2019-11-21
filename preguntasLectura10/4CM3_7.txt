@@ -1,0 +1,29 @@
+¿Qué proporciona la replicación?
+A. Mayor rendimiento, alta disponibilidad y tolerancia a fallos.
+B. Mayor escalabilidad, seguridad y tolerancia a fallos.
+C. Alta disponibilidad, consistencia de datos y mayor rapidez.
+D. Confiabilidad, mayor rendimiento y compatibilidad.
+
+¿Qué es la transparencia frente a la replicación?
+A. Los clientes no deben de saber que existen múltiples copias físicas de los datos.
+B. Los clientes saben exactamente cuántas réplicas físicas de los datos existen.
+C. Los clientes deben de replicar la información.
+D. Los clientes no deben de replicar la información.
+
+¿Qué es una réplica?
+A. Son objetos físicos, almacenados cada uno de ellos en un computador individual, con datos y comportamientos que están vinculados con un cierto grado de consistencia dentro del funcionamiento del sistema.
+B. Son objetos físicos, almacenados cada uno de ellos en distintos computadores, con datos y comportamientos que están vinculados con un cierto grado de consistencia dentro del funcionamiento del sistema.
+C. Son objetos virtuales, almacenados cada uno de ellos en distintos computadores, con datos y comportamientos que están vinculados con un cierto grado de consistencia dentro del funcionamiento del sistema.
+D. Son objetos virtuales, almacenados cada uno de ellos en un computador individual, con datos y comportamientos que están vinculados con un cierto grado de consistencia dentro del funcionamiento del sistema.
+
+¿Cuáles son las cuatro tareas de un servicio de pertenencia a grupos?
+A. Proporcionar una interfaz para cambios en la pertenencia, detectar fallos, notificar cambios en la pertenencia y expandir las direcciones del grupo.
+B. Entrega de vistas, detección de sospechosos, partición de la red y comprobación de consistencia.
+C. Detectar fallos, gestionar las entregas, verificar la integridad y expulsar a los miembros sospechosos.
+D. Proporcionar una interfaz para cambios en la pertenencia, ordenar los mensajes, partición de la red y entrega de vistas.
+
+¿Cuáles son las garantías que proporciona la comunicación en grupo mediante vistas síncronas?
+A. Acuerdo, integridad y validez.
+B. Consistencia, integridad y orden.
+C. Seguridad, acuerdo y robustez.
+D. Acuerdo, consistencia y seguridad.

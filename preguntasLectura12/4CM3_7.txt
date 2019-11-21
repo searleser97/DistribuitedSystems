@@ -1,0 +1,29 @@
+¿Qué es un token?
+A. Un único mensaje especial que se va pasando entre los procesos, y solo quien lo tenga puede tener acceso a un recurso compartido.
+B. Varios mensajes que un grupo de procesos pueden poseer para acceder a un recurso compartido.
+C. Un único mensaje especial que se va pasando entre los procesos, y quien lo tenga no podrá acceder a un recurso compartido.
+D. Varios mensajes que un grupo de procesos pueden poseer para obtener permisos sobre un recurso compartido.
+
+¿Qué requiere el algoritmo de Ricart y Agrawala?
+A. Un orden total de todos los eventos del sistema.
+B. Un orden parcial de todos los procesos del sistema.
+C. Un orden parcial de todos los eventos del sistema.
+D. Un orden total de todos los procesos del sistema.
+
+¿Cuáles son las características de un anillo lógico?
+A. A cada proceso se le asigna una posición en el anillo, no importa el orden, pero cada proceso solo debe saber cuál es el siguiente después de él.
+B. A cada proceso se le asigna una posición en el anillo, importa el orden y cada proceso debe saber cuál es el anterior antes de él y el siguiente después de él.
+C. A cada proceso se le asigna una posición en en anillo, no importa el orden y cada proceso debe saber cuál es el anterior antes de él y el siguiente después de él.
+D. A cada proceso se le asigna una posición en el anillo, importa el orden y cada proceso solo debe saber cuál es el siguiente después de él.
+
+¿Cuáles son los pasos en el algoritmo del abusón (Bully)?
+A. Un proceso P envía un mensaje de ELECCIÓN a todos los procesos con números mayores. Si ninguno responde, P coordina. Si alguno responde, ese coordina.
+B. Un proceso P envía un mensaje de ELECCIÓN a todos los procesos con números mayores. Si ninguno responde, el siguiente proceso a P coordina.
+C. Un proceso P envía un mensaje de ELECCIÓN a todos los procesos con números menores. Si ninguno responde, el proceso anterior a P coordina.
+D. Un proceso P envía un mensaje de ELECCIÓN a todos los procesos con números menores. Si ninguno responde, P coordina. Si alguno responde, ese coordina.
+
+¿Qué resuelve la exclusión mutua?
+A. Garantiza que los procesos tengan acceso mutuamente exclusivo a los recursos para evitar que esta concurrencia los corrompa o los vuelva inconsistentes.
+B. Garantiza que los procesos no corrompan ni vuelvan inconsistentes los recursos.
+C. Garantiza que los procesos tengan acceso mutuamente exclusivo a los recursos para evitar que se sobrecarguen.
+D. Garantiza que los procesos no sobrecarguen los recursos.

@@ -1,0 +1,29 @@
+¿Qué es la multitransmisión atómica?
+A. Garantía de que un mensaje sea entregado a todos los procesos o a ninguno en absoluto, preservando el orden.
+B. Garantía de que un mensaje sea entregado a al menos un proceso, preservando el orden.
+C. Garantía de que un mensaje sea entregado a al menos un proceso, sin importar el orden.
+D. Garantía de que un mensaje sea entregado a todos los procesos o a ninguno en absoluto, sin importar el orden.
+
+¿Qué es una multitransmisión no ordenada confiable?
+A. Es una multitransmisión virtualmente síncrona en la cual no existen garantías en cuanto al orden en el que los mensajes recibidos son entregados por los procesos.
+B. Es una multitransmisión virtualmente asíncrona en la cual no existen garantías en cuanto al orden en el que los mensajes recibidos son entregados por los procesos.
+C. Es una multitransmisión virtualmente síncrona en la cual existen garantías en cuanto al orden en el que los mensajes recibidos son entregados por los procesos.
+D. Es una multitransmisión virtualmente asíncrona en la cual existen garantías en cuanto al orden en el que los mensajes recibidos son entregados por los procesos.
+
+¿Qué sucede en una multitransmisión confiable ordenada en modo FIFO?
+A. La capa de comunicación está obligada a entregar los mensajes que llegan del mismo proceso en el mismo orden en que fueron enviados.
+B. La capa de comunicación está obligada a entregar los mensajes que llegan del mismo proceso en orden inverso en que fueron enviados.
+C. La capa de comunicación está obligada a entregar los mensajes que llegan de diferentes procesos en el mismo orden en que fueron enviados.
+D. La capa de comunicación está obligada a entregar los mensajes que llegan de diferentes procesos en orden inverso en que fueron enviados.
+
+¿Qué es la multitransmisión confiable?
+A. Que un mensaje enviado a un grupo de procesos deberá ser entregado a cada uno de los miembros de dicho grupo.
+B. Que un mensaje enviado a un proceso deberá ser entregado a ese proceso.
+C. Que un mensaje enviado a un grupo de procesos será recibido por al menos un miembro de dicho grupo.
+D. Que varios mensajes enviados a un proceso serán recibidos por ese mismo proceso.
+
+¿Cómo funciona la supresión de retroalimentación?
+A. Cuando un destinatario detecta que le falta un mensaje, programa una solicitud multitransmitida de retroalimentación con retraso, pero si le llega otra solicitud en ese lapso de alguien más, la cancelará.
+B. Los destinatarios siempre avisan cuando les llega un mensaje y cuando no les llegó.
+C. Cuando un destinatario detecta que le falta un mensaje, manda inmediatamente una solicitud de retroalimentación.
+D. Cuando un destinatario detecta que le falta un mensaje, espera a que alguien más le avise al emisor o él mismo avisa de forma aleatoria.
