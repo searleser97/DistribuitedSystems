@@ -1,4 +1,5 @@
 #include "Reply.h"
+#include "Request.h"
 #include <iostream>
 #include <string>
 #include <unordered_map>
@@ -40,6 +41,35 @@ void isr(int sig){
 	}
 }
 
+timeval add(TimeVal a, TimeVal b){
+	int64_t ta = a.tv_sec*1000000 + a.tv_usec;
+	int64_t tb = b.tv_sec*1000000 + b.tv_usec;
+	int64_t tc = ta + tb;
+	TimeVal ans;
+	ans.tv_sec = tc/1000000;
+	ans.tv_usec = tc%1000000;
+	return ans;
+}
+
+timeval subtract(TimeVal a, TimeVal b){
+	int64_t ta = a.tv_sec*1000000 + a.tv_usec;
+	int64_t tb = b.tv_sec*1000000 + b.tv_usec;
+	int64_t tc = ta - tb;
+	TimeVal ans;
+	ans.tv_sec = tc/1000000;
+	ans.tv_usec = tc%1000000;
+	return ans;
+}
+
+timeval divide(TimeVal a, int64_t k){
+	int64_t ta = a.tv_sec*1000000 + a.tv_usec;
+	ta /= k;
+	TimeVal ans;
+	ans.tv_sec = ta/1000000;
+	ans.tv_usec = ta%1000000;
+	return ans;
+}
+
 int main(int argc, char *argv[]) {
 	signal(SIGINT, isr);
 
@@ -60,26 +90,41 @@ int main(int argc, char *argv[]) {
 	cout << "Puerto en el que se va a escuchar: ";
 	cin >> puerto;
 	Reply reply(puerto);
+	Request r;
 	cout << "Servidor iniciado...\n";
-	TimeVal tv;
+	
+	string ip_time;
+	int puerto_time;
+
+	cin >> ip_time >> puerto_time;
+	
+	TimeVal tv_client, tv_server, tv_after, tv_real;
 	while (1) {
 		char res = 0;
 		Message *msg = reply.getRequest();
 		reg = *(registro*)msg->arguments;
-		tv.tv_sec = 0;
-		tv.tv_usec = 0;
 		if (msg->operationId == Message::allowedOperations::registerVote) {
 			string id = string(reg.celular) + string(reg.CURP) + string(reg.partido);
 			if (!nbd.count(id)) {
-				gettimeofday(&tv, NULL);//get time
+				memset(&tv_client, 0, sizeof(TimeVal));
+				memset(&tv_server, 0, sizeof(TimeVal));
+				memset(&tv_after, 0, sizeof(TimeVal));
+				memset(&tv_real, 0, sizeof(TimeVal));
+				gettimeofday(&tv_client, NULL);//get time
+				size_t len_reply;
+				tv_server = *(TimeVal *)r.doOperation(ip_time, puerto_time,
+                                   Message::allowedOperations::getTime,
+                                   NULL, 0, len_reply);
+				gettimeofday(&tv_after, NULL);
+				tv_real = add(tv_server, divide(subtract(tv_after, tv_client), 2));
 				nbd.insert(id);
 				fprintf(f, "%s%s%s\n", reg.celular, reg.CURP, reg.partido);
 				fflush(f);
 				res = 1;
-				fprintf(fileTimes, "%d:%d\n", tv.tv_sec, tv.tv_usec);
+				fprintf(fileTimes, "%d:%d\n", tv_real.tv_sec, tv_real.tv_usec);
 				fflush(fileTimes);
 			}
-			reply.sendReply((char*)&tv, sizeof(tv));
+			reply.sendReply((char*)&tv_real, sizeof(tv_real));
 		}
 	}
 	return 0;

@@ -1,4 +1,4 @@
-all: client2 server gen
+all: client2 server gen serverTime
 
 DatagramPacket.o: DatagramPacket.cpp
 	g++ -c DatagramPacket.cpp -Wall
@@ -22,7 +22,10 @@ client2: DatagramPacket.o DatagramSocket.o Request.o Reply.o client2.cpp
 server: DatagramPacket.o DatagramSocket.o Request.o Reply.o Trie.o server.cpp
 	g++ DatagramPacket.o DatagramSocket.o Request.o Reply.o server.cpp -o server Trie.o
 
+serverTime: serverTime.cpp Request.o Reply.o DatagramPacket.o DatagramSocket.o
+	g++ DatagramPacket.o DatagramSocket.o Request.o Reply.o serverTime.cpp -o serverTime -Wall
+
 .PHONY: clean
 
 clean:
-	rm -rf *.o *.exe server client2 gen Trie.o
+	rm -rf *.o *.exe server client2 gen Trie.o serverTime

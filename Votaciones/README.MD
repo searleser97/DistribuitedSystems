@@ -49,3 +49,7 @@ Con el uso del trie, ¿cuánto tiempo tardó en enviar 10,000 votos?
 
 ¿Cuánto espacio de memoria RAM ocupa con los 70 millones de votos?
 - 2.2 GB
+
+# Ejercicio 6
+- La diferencia de sincronización entre el tiempo de ambas computadoras fue de 3ms.
+- La diferencia de sincronización entre el tiempo de la misma computadora fue de 1ms.
